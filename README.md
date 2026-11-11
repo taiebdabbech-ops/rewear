@@ -5,6 +5,7 @@ Web Project — **Objective 3: development and integration of the main features*
 
 - **Team:** Borhen Eddine Labidi, Taieb Dabbech
 - **Supervisor:** Dr. Maroua Nouioua
+- **Repository:** https://github.com/taiebdabbech-ops/rewear
 
 ---
 
@@ -49,6 +50,9 @@ npx json-server --watch db.json --port 3000
 # 3. Terminal 2 — start the Angular app on http://localhost:4200
 ng serve -o
 ```
+
+If the Angular CLI is not installed globally, use `npm start` instead of `ng serve -o`, then open http://localhost:4200.
+Keep both terminals open while using the site: if json-server is stopped, the pages show a "Cannot reach the API" message.
 
 **Demo accounts** (password `rewear123` for all): `sarra@rewear.tn` (Trusted seller), `amine@rewear.tn`, `ines@rewear.tn`, `salma@rewear.tn`.
 You can also create a new account from the Sign up tab.
@@ -95,18 +99,18 @@ src/
 
 **Dependencies:** the Angular packages created by `ng new`, plus `json-server@0.17.4` (development only).
 
-## 6. Manual test checklist
+## 6. How to test the main features
 
-- [ ] Every link of the header, footer and breadcrumb opens the right page
-- [ ] Shop: each filter alone and combined, sorting, pagination, "Clear all", search from the header
-- [ ] Favourites: heart on a card while logged out (redirect to Log in) and logged in
-- [ ] Sell: empty form shows the error messages; publish with photos; save a draft; edit an item
-- [ ] My account: mark as sold, publish a draft, delete with confirmation
-- [ ] Log in with a wrong password, sign up with an existing email, password mismatch
-- [ ] Visit `/sell` while logged out: redirect to Log in, then back to Sell
-- [ ] Stop json-server: the error message and "Try again" button appear
-- [ ] Responsive: 375 px (phone), 768 px (tablet), 1280 px (desktop)
-- [ ] Browsers: Chrome, Firefox, Edge
+- Every link of the header, footer and breadcrumb opens the right page
+- Shop: each filter alone and combined, sorting, pagination, "Clear all", search from the header
+- Favourites: heart on a card while logged out (redirect to Log in) and logged in
+- Sell: empty form shows the error messages; publish with photos; save a draft; edit an item
+- My account: mark as sold, publish a draft, delete with confirmation
+- Log in with a wrong password, sign up with an existing email, password mismatch
+- Visit `/sell` while logged out: redirect to Log in, then back to Sell
+- Stop json-server: the error message and "Try again" button appear
+- Responsive: 375 px (phone), 768 px (tablet), 1280 px (desktop)
+- Browsers: Chrome, Firefox, Edge
 
 ## 7. Limits of this version
 
@@ -117,5 +121,8 @@ src/
 
 ## 8. Git workflow
 
+Code hosted on GitHub: https://github.com/taiebdabbech-ops/rewear
+
+Conventions for the next objectives:
 - `main` always runs; one branch per feature (`feature/shop-filters`, `feature/sell-form`…), merged through pull requests.
 - Clear commit messages: `feat: add size filter`, `fix: price filter with empty value`, `style: product card spacing`.
