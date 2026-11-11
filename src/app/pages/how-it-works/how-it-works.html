@@ -1,0 +1,81 @@
+<div class="container page">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a routerLink="/">Home</a> › <strong>How it works</strong>
+  </nav>
+  <h1>How REWEAR works</h1>
+  <p class="lead">REWEAR connects people who no longer wear their clothes with people looking for quality pieces at fair prices.</p>
+
+  <div class="guides">
+    <section id="buying" class="panel">
+      <h2>Buying guide</h2>
+      <ol>
+        <li>Browse a category or search for a brand, then filter by size, price and condition.</li>
+        <li>Check the condition grade, the photos and the seller's badge and reviews.</li>
+        <li>Contact the seller and agree on delivery or a meeting place.</li>
+        <li>Receive the item, check it, pay, and leave a review.</li>
+      </ol>
+      <a routerLink="/shop" class="btn btn-primary">Start shopping</a>
+    </section>
+    <section id="selling" class="panel">
+      <h2>Selling guide</h2>
+      <ol>
+        <li>Create your free account.</li>
+        <li>Click <strong>Sell</strong>, add up to four photos in daylight.</li>
+        <li>Fill in the size, brand, condition and price; be honest about defects.</li>
+        <li>Answer buyers quickly and mark the item as sold in My account.</li>
+      </ol>
+      <a routerLink="/sell" class="btn btn-primary">Sell an item</a>
+    </section>
+  </div>
+
+  <section id="conditions" class="block">
+    <h2>Condition grades</h2>
+    <p class="muted">Every listing uses one of these four grades, so all items are described the same way.</p>
+    <div class="cards">
+      @for (c of conditions; track c) {
+        <div class="panel">
+          <app-condition-label [condition]="c" [large]="true" />
+          <p>{{ conditionInfo[c] }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="badges" class="block">
+    <h2>Seller badges</h2>
+    <div class="cards three">
+      @for (b of badges; track b) {
+        <div class="panel">
+          <app-seller-badge [badge]="b" [large]="true" />
+          <p>{{ badgeInfo[b] }}</p>
+        </div>
+      }
+    </div>
+    <p class="muted small">In version 1, identity checks are simulated.</p>
+  </section>
+
+  <section id="faq" class="block">
+    <h2>FAQ</h2>
+    @for (item of faq; track item.q) {
+      <details class="panel faq">
+        <summary>{{ item.q }}</summary>
+        <p>{{ item.a }}</p>
+      </details>
+    }
+  </section>
+
+  <div class="info-grid">
+    <section id="about" class="panel">
+      <h2>About</h2>
+      <p>REWEAR is a student web project from SUP'COM. Its goal is to cut clothing costs, give clothes a second life and help people earn money from what they no longer wear.</p>
+    </section>
+    <section id="contact" class="panel">
+      <h2>Contact</h2>
+      <p>Questions or feedback: <a href="mailto:contact&#64;rewear.tn">contact&#64;rewear.tn</a></p>
+    </section>
+    <section id="terms" class="panel">
+      <h2>Terms and privacy</h2>
+      <p>Demonstration project: data is stored locally by json-server and is not shared. Do not use real passwords.</p>
+    </section>
+  </div>
+</div>

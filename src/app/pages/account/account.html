@@ -1,0 +1,118 @@
+<div class="container page">
+  @if (auth.user(); as user) {
+    <div class="account-head">
+      <div>
+        <h1>Hello, {{ user.firstName }}</h1>
+        <p class="muted">Manage your listings, favourites and reputation.</p>
+      </div>
+      <a routerLink="/sell" class="btn btn-primary"><app-icon name="plus" [size]="18" /> New listing</a>
+    </div>
+
+    <div class="account-layout">
+      <nav class="side" aria-label="Account sections">
+        @for (t of tabs; track t.id) {
+          <button type="button" [class.active]="currentTab() === t.id" [attr.aria-current]="currentTab() === t.id ? 'page' : null" (click)="selectTab(t.id)">
+            {{ t.label }}
+          </button>
+        }
+        <button type="button" class="logout" (click)="logout()"><app-icon name="logout" [size]="16" /> Log out</button>
+      </nav>
+
+      <section class="content">
+        <div class="summary">
+          <div><span class="muted">Badge</span><app-seller-badge [badge]="user.badge" /></div>
+          <div><span class="muted">Rating</span><strong>{{ rating().count ? rating().average + ' ★' : '—' }}</strong></div>
+          <div><span class="muted">Sales</span><strong>{{ soldCount() }}</strong></div>
+          <div><span class="muted">Total views</span><strong>{{ totalViews() }}</strong></div>
+        </div>
+
+        @switch (currentTab()) {
+          @case ('listings') {
+            <div class="tabs" role="tablist">
+              @for (s of statuses; track s.id) {
+                <button type="button" role="tab" [class.active]="status() === s.id" [attr.aria-selected]="status() === s.id" (click)="status.set(s.id)">
+                  {{ s.label }} ({{ countFor(s.id) }})
+                </button>
+              }
+            </div>
+            <ul class="rows">
+              @for (listing of filteredListings(); track listing.id) {
+                <li class="row">
+                  <img [src]="listing.photos[0] || 'images/placeholder.svg'" alt="" />
+                  <div class="row-main">
+                    <a [routerLink]="['/product', listing.id]" class="row-title">{{ listing.title || 'Untitled draft' }}</a>
+                    <div class="row-meta">
+                      <strong>{{ listing.price }} TND</strong>
+                      <app-condition-label [condition]="listing.condition" />
+                      <span class="muted"><app-icon name="eye" [size]="15" /> {{ listing.views }}</span>
+                    </div>
+                  </div>
+                  <div class="row-actions">
+                    @if (pendingDelete() === listing.id) {
+                      <span class="confirm">Delete for good?</span>
+                      <button type="button" class="btn btn-sm btn-danger" (click)="confirmDelete(listing)">Delete</button>
+                      <button type="button" class="btn btn-sm btn-ghost" (click)="pendingDelete.set(null)">Cancel</button>
+                    } @else {
+                      <a class="btn btn-sm btn-secondary" routerLink="/sell" [queryParams]="{ edit: listing.id }"><app-icon name="edit" [size]="15" /> Edit</a>
+                      @if (listing.status === 'active') {
+                        <button type="button" class="btn btn-sm btn-secondary" (click)="setStatus(listing, 'sold')"><app-icon name="check" [size]="15" /> Mark as sold</button>
+                      } @else {
+                        <button type="button" class="btn btn-sm btn-secondary" (click)="setStatus(listing, 'active')">Publish</button>
+                      }
+                      <button type="button" class="btn btn-sm btn-ghost" [attr.aria-label]="'Delete ' + listing.title" (click)="pendingDelete.set(listing.id)"><app-icon name="trash" [size]="16" /></button>
+                    }
+                  </div>
+                </li>
+              } @empty {
+                <li class="state">
+                  <p>No listing here yet.</p>
+                  <a routerLink="/sell" class="btn btn-primary">Sell an item</a>
+                </li>
+              }
+            </ul>
+          }
+          @case ('favourites') {
+            <h2>My favourites</h2>
+            <div class="grid">
+              @for (listing of favouriteListings(); track listing.id) {
+                <app-product-card [listing]="listing" />
+              } @empty {
+                <p class="muted">Tap the heart on an item to save it here.</p>
+              }
+            </div>
+          }
+          @case ('reputation') {
+            <h2>My reputation</h2>
+            <div class="panel rep">
+              <app-seller-badge [badge]="user.badge" [large]="true" />
+              <p>{{ badgeInfo[user.badge] }}</p>
+              <app-star-rating [value]="rating().average" [count]="rating().count" />
+            </div>
+            <ul class="reviews">
+              @for (review of reviews(); track review.id) {
+                <li class="panel">
+                  <strong>{{ review.authorName }}</strong>
+                  <app-star-rating [value]="review.rating" />
+                  <p>{{ review.comment }}</p>
+                </li>
+              } @empty {
+                <li class="muted">No reviews yet. They appear after your first sales.</li>
+              }
+            </ul>
+          }
+          @case ('profile') {
+            <h2>Profile</h2>
+            <dl class="panel profile">
+              <div><dt>Name</dt><dd>{{ user.firstName }} {{ user.lastName }}</dd></div>
+              <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+              <div><dt>Phone</dt><dd>{{ user.phone }}</dd></div>
+              <div><dt>City</dt><dd>{{ user.city }}</dd></div>
+              <div><dt>Member since</dt><dd>{{ user.memberSince }}</dd></div>
+            </dl>
+            <a [routerLink]="['/seller', user.id]">See my public profile</a>
+          }
+        }
+      </section>
+    </div>
+  }
+</div>

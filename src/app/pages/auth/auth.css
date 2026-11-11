@@ -1,0 +1,20 @@
+.auth-page { display: grid; grid-template-columns: minmax(0, 560px) 1fr; gap: 32px; align-items: start; }
+.auth-card { padding: 28px; }
+.auth-card h1 { font-size: 1.8rem; }
+.switch { text-align: center; margin: 14px 0 0; color: var(--stone); }
+.demo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--linen); border-radius: var(--radius); padding: 10px 12px; margin-top: 18px; color: var(--forest); font-size: 0.9rem; }
+.demo span { flex: 1; }
+.terms { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; cursor: pointer; }
+.terms input { width: 18px; height: 18px; accent-color: var(--forest); margin-top: 2px; }
+.error.block { display: block; margin-bottom: 10px; }
+.btn-block { margin-top: 8px; }
+.benefits { background: var(--forest); color: #fff; border-radius: var(--radius); padding: 28px; }
+.benefits h2 { color: #fff; }
+.benefits ul { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 12px; }
+.benefits li { display: flex; gap: 10px; align-items: center; }
+.benefits app-icon { color: var(--brass); }
+.benefits img { width: 100%; max-width: 260px; border-radius: var(--radius); display: block; }
+@media (max-width: 860px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .benefits { display: none; }
+}

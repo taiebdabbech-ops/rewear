@@ -1,0 +1,13 @@
+.footer { background: var(--forest); color: var(--mist); margin-top: 64px; }
+.footer-inner { display: flex; gap: 48px; padding-top: 40px; padding-bottom: 28px; flex-wrap: wrap; }
+.brand { max-width: 300px; }
+.logo { display: block; color: #fff; font-weight: 700; font-size: 1.3rem; letter-spacing: 0.08em; }
+.tagline { font-family: var(--font-heading); font-style: italic; color: var(--sage); }
+.brand p { margin-top: 12px; font-size: 0.9rem; }
+.links { display: flex; gap: 56px; flex-wrap: wrap; margin-left: auto; }
+.links h2 { font-family: var(--font-body); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); margin: 0 0 10px; }
+.links div { display: flex; flex-direction: column; gap: 8px; }
+.links a { color: #fff; text-decoration: none; font-size: 0.95rem; }
+.links a:hover { text-decoration: underline; }
+.copy { border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 14px; padding-bottom: 18px; font-size: 0.8rem; color: var(--sage); }
+@media (max-width: 700px) { .links { margin-left: 0; gap: 32px; } }

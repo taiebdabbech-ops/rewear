@@ -1,0 +1,110 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow"><app-icon name="leaf" [size]="16" /> Second-hand fashion in Tunisia</p>
+      <h1>Sell what you no longer wear.</h1>
+      <p class="lead">Give your clothes a second life and find quality pieces at fair prices, with no service fee for buyers.</p>
+      <div class="hero-actions">
+        <a routerLink="/sell" class="btn btn-primary">Start selling</a>
+        <a routerLink="/how-it-works" class="btn btn-secondary">How it works</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <img src="images/coat-camel.svg" alt="" />
+      <img src="images/tshirt-green.svg" alt="" />
+      <img src="images/dress-forest.svg" alt="" />
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="impact" aria-label="REWEAR in figures">
+    <div>
+      <strong>{{ activeCount() }}</strong>
+      <span>items for sale right now</span>
+    </div>
+    <div>
+      <strong>{{ soldCount() }}</strong>
+      <span>pieces already given a second life</span>
+    </div>
+    <div>
+      <strong>0 TND</strong>
+      <span>service fee for buyers</span>
+    </div>
+  </section>
+
+  @if (error()) {
+    <div class="alert" role="alert">
+      {{ error() }}
+      <button type="button" class="btn btn-sm btn-secondary retry" (click)="retry()">Try again</button>
+    </div>
+  }
+
+  <div class="section-head">
+    <h2>Shop by category</h2>
+  </div>
+  <div class="tiles">
+    @for (tile of tiles; track tile.name) {
+      <a class="tile" [routerLink]="['/shop', tile.name.toLowerCase()]">
+        <img [src]="tile.image" [alt]="tile.name" />
+        <span class="tile-text">
+          <strong>{{ tile.name }}</strong>
+          <small>{{ tile.text }}</small>
+        </span>
+      </a>
+    }
+  </div>
+
+  <div class="section-head">
+    <h2>Recent items</h2>
+    <a routerLink="/shop">See all <app-icon name="arrow-right" [size]="16" /></a>
+  </div>
+  @if (loading()) {
+    <div class="grid">
+      @for (p of placeholders; track p) {
+        <div class="skeleton card-skeleton"></div>
+      }
+    </div>
+  } @else {
+    <div class="grid">
+      @for (listing of recent(); track listing.id) {
+        <app-product-card [listing]="listing" />
+      } @empty {
+        <p class="muted">No items yet. Be the first to sell one!</p>
+      }
+    </div>
+  }
+
+  @if (trusted().length > 0) {
+    <div class="section-head">
+      <h2>Trusted sellers' items</h2>
+      <a routerLink="/shop">See all <app-icon name="arrow-right" [size]="16" /></a>
+    </div>
+    <div class="grid">
+      @for (listing of trusted(); track listing.id) {
+        <app-product-card [listing]="listing" />
+      }
+    </div>
+  }
+
+  <section class="steps" aria-labelledby="steps-title">
+    <h2 id="steps-title">How REWEAR works</h2>
+    <ol>
+      <li>
+        <span class="step-icon"><app-icon name="upload" /></span>
+        <strong>Post your item</strong>
+        <p>A few photos, the size, the condition and your price: it takes two minutes.</p>
+      </li>
+      <li>
+        <span class="step-icon"><app-icon name="message" /></span>
+        <strong>Talk with buyers</strong>
+        <p>Buyers contact you and check your badge and reviews before buying.</p>
+      </li>
+      <li>
+        <span class="step-icon"><app-icon name="bag" /></span>
+        <strong>Ship or hand over</strong>
+        <p>Send it with our delivery partner or meet the buyer in your city.</p>
+      </li>
+    </ol>
+  </section>
+</div>

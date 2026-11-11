@@ -1,0 +1,509 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "firstName": "Sarra",
+      "lastName": "Ben Ali",
+      "email": "sarra@rewear.tn",
+      "phone": "22123456",
+      "password": "rewear123",
+      "city": "Tunis",
+      "badge": "Trusted",
+      "memberSince": "2026-03"
+    },
+    {
+      "id": "u2",
+      "firstName": "Amine",
+      "lastName": "Khelifi",
+      "email": "amine@rewear.tn",
+      "phone": "55234567",
+      "password": "rewear123",
+      "city": "Sfax",
+      "badge": "Verified",
+      "memberSince": "2026-05"
+    },
+    {
+      "id": "u3",
+      "firstName": "Ines",
+      "lastName": "Mansour",
+      "email": "ines@rewear.tn",
+      "phone": "98345678",
+      "password": "rewear123",
+      "city": "Sousse",
+      "badge": "Basic",
+      "memberSince": "2026-09"
+    },
+    {
+      "id": "u4",
+      "firstName": "Salma",
+      "lastName": "Gharbi",
+      "email": "salma@rewear.tn",
+      "phone": "24456789",
+      "password": "rewear123",
+      "city": "Sousse",
+      "badge": "Trusted",
+      "memberSince": "2026-02"
+    }
+  ],
+  "listings": [
+    {
+      "id": "l1",
+      "sellerId": "u1",
+      "title": "Denim jacket – Levi's",
+      "description": "Classic blue denim jacket, regular fit. Worn a few times, no stains or tears. Comes from a smoke-free home.\nChest: 52 cm · Length: 60 cm.",
+      "category": "Women",
+      "type": "Jackets",
+      "size": "M",
+      "brand": "Levi's",
+      "color": "Blue",
+      "condition": "Excellent",
+      "price": 45,
+      "photos": [
+        "images/jacket-blue.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-09T10:20:00Z",
+      "views": 132
+    },
+    {
+      "id": "l2",
+      "sellerId": "u1",
+      "title": "Midi wrap dress",
+      "description": "Burgundy wrap dress, light fabric, perfect for summer evenings. Worn once for a wedding.",
+      "category": "Women",
+      "type": "Dresses",
+      "size": "S",
+      "brand": "Zara",
+      "color": "Burgundy",
+      "condition": "Like New",
+      "price": 32,
+      "photos": [
+        "images/dress-burgundy.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-08T17:05:00Z",
+      "views": 87
+    },
+    {
+      "id": "l3",
+      "sellerId": "u2",
+      "title": "White leather sneakers",
+      "description": "Comfortable white sneakers, soles in good shape. Some light marks on the toe, cleaned before the photos.",
+      "category": "Men",
+      "type": "Shoes",
+      "size": "42",
+      "brand": "Adidas",
+      "color": "White",
+      "condition": "Good",
+      "price": 60,
+      "photos": [
+        "images/sneaker-white.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-08T09:40:00Z",
+      "views": 64
+    },
+    {
+      "id": "l4",
+      "sellerId": "u3",
+      "title": "Oversized hoodie",
+      "description": "Soft green hoodie with kangaroo pocket. Oversized fit, fits M to XL.",
+      "category": "Streetwear",
+      "type": "Hoodies",
+      "size": "L",
+      "brand": "Nike",
+      "color": "Green",
+      "condition": "Like New",
+      "price": 28,
+      "photos": [
+        "images/hoodie-green.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-07T19:12:00Z",
+      "views": 41
+    },
+    {
+      "id": "l5",
+      "sellerId": "u2",
+      "title": "Straight-leg jeans",
+      "description": "Dark blue straight jeans, no fading. Waist 82 cm, inside leg 80 cm.",
+      "category": "Men",
+      "type": "Jeans",
+      "size": "M",
+      "brand": "Pull&Bear",
+      "color": "Dark blue",
+      "condition": "Excellent",
+      "price": 35,
+      "photos": [
+        "images/jeans-navy.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-07T11:30:00Z",
+      "views": 58
+    },
+    {
+      "id": "l6",
+      "sellerId": "u2",
+      "title": "Basic cotton T-shirt",
+      "description": "Cream organic cotton T-shirt. Slight pilling under the arms, otherwise perfect.",
+      "category": "Men",
+      "type": "T-shirts",
+      "size": "M",
+      "brand": "Uniqlo",
+      "color": "Cream",
+      "condition": "Good",
+      "price": 12,
+      "photos": [
+        "images/tshirt-cream.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-06T15:00:00Z",
+      "views": 22
+    },
+    {
+      "id": "l7",
+      "sellerId": "u4",
+      "title": "Wool coat",
+      "description": "Warm camel wool coat with two pockets. Dry-cleaned, ready for winter.\nShoulders: 42 cm · Length: 95 cm.",
+      "category": "Women",
+      "type": "Coats",
+      "size": "M",
+      "brand": "Mango",
+      "color": "Camel",
+      "condition": "Excellent",
+      "price": 90,
+      "photos": [
+        "images/coat-camel.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-06T09:10:00Z",
+      "views": 153
+    },
+    {
+      "id": "l8",
+      "sellerId": "u3",
+      "title": "Kids T-shirt pack (3 pieces)",
+      "description": "Three yellow and white T-shirts for kids. Washed and ironed, still bright.",
+      "category": "Kids",
+      "type": "T-shirts",
+      "size": "6 years",
+      "brand": "Kiabi",
+      "color": "Yellow",
+      "condition": "Good",
+      "price": 15,
+      "photos": [
+        "images/tshirt-yellow.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-05T13:45:00Z",
+      "views": 30
+    },
+    {
+      "id": "l9",
+      "sellerId": "u3",
+      "title": "Kids puffer jacket",
+      "description": "Red puffer jacket with hood, very warm. Worn one winter only.",
+      "category": "Kids",
+      "type": "Jackets",
+      "size": "8 years",
+      "brand": "Okaïdi",
+      "color": "Red",
+      "condition": "Excellent",
+      "price": 30,
+      "photos": [
+        "images/jacket-red.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-05T08:20:00Z",
+      "views": 47
+    },
+    {
+      "id": "l10",
+      "sellerId": "u4",
+      "title": "Vintage leather jacket (90s)",
+      "description": "Real leather jacket from the 90s, beautiful patina. A unique piece, lining in perfect condition.",
+      "category": "Vintage",
+      "type": "Jackets",
+      "size": "L",
+      "brand": "Vintage",
+      "color": "Brown",
+      "condition": "Good",
+      "price": 120,
+      "photos": [
+        "images/jacket-brown.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-04T18:00:00Z",
+      "views": 210
+    },
+    {
+      "id": "l11",
+      "sellerId": "u4",
+      "title": "Vintage silk shirt",
+      "description": "Teal silk shirt from the 80s, mother-of-pearl buttons. Very fluid, no marks.",
+      "category": "Vintage",
+      "type": "Shirts",
+      "size": "M",
+      "brand": "Vintage",
+      "color": "Teal",
+      "condition": "Excellent",
+      "price": 38,
+      "photos": [
+        "images/shirt-teal.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-04T10:15:00Z",
+      "views": 76
+    },
+    {
+      "id": "l12",
+      "sellerId": "u3",
+      "title": "Graphic T-shirt",
+      "description": "Black graphic T-shirt, print slightly faded, which gives it a vintage look.",
+      "category": "Streetwear",
+      "type": "T-shirts",
+      "size": "L",
+      "brand": "Carhartt",
+      "color": "Black",
+      "condition": "Fair",
+      "price": 15,
+      "photos": [
+        "images/tshirt-black.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-03T16:30:00Z",
+      "views": 19
+    },
+    {
+      "id": "l13",
+      "sellerId": "u2",
+      "title": "Cargo trousers",
+      "description": "Olive cargo trousers with six pockets. Adjustable ankles.",
+      "category": "Streetwear",
+      "type": "Trousers",
+      "size": "M",
+      "brand": "Bershka",
+      "color": "Olive",
+      "condition": "Excellent",
+      "price": 40,
+      "photos": [
+        "images/trousers-olive.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-03T09:00:00Z",
+      "views": 35
+    },
+    {
+      "id": "l14",
+      "sellerId": "u1",
+      "title": "Black sneakers",
+      "description": "Black running-style sneakers, comfortable for daily use. Visible wear on the soles.",
+      "category": "Streetwear",
+      "type": "Shoes",
+      "size": "41",
+      "brand": "Nike",
+      "color": "Black",
+      "condition": "Good",
+      "price": 55,
+      "photos": [
+        "images/sneaker-black.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-02T14:20:00Z",
+      "views": 44
+    },
+    {
+      "id": "l15",
+      "sellerId": "u1",
+      "title": "Pleated midi skirt",
+      "description": "Navy pleated skirt, elastic waist. Never worn, label still attached.",
+      "category": "Women",
+      "type": "Skirts",
+      "size": "S",
+      "brand": "H&M",
+      "color": "Navy",
+      "condition": "Like New",
+      "price": 22,
+      "photos": [
+        "images/skirt-navy.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-11-01T12:00:00Z",
+      "views": 28
+    },
+    {
+      "id": "l16",
+      "sellerId": "u4",
+      "title": "Grey wool coat",
+      "description": "Long grey coat, timeless cut. Small repair on the inside pocket.",
+      "category": "Men",
+      "type": "Coats",
+      "size": "L",
+      "brand": "Celio",
+      "color": "Grey",
+      "condition": "Good",
+      "price": 70,
+      "photos": [
+        "images/coat-grey.svg"
+      ],
+      "status": "active",
+      "createdAt": "2026-10-30T10:00:00Z",
+      "views": 61
+    },
+    {
+      "id": "l17",
+      "sellerId": "u1",
+      "title": "Floral summer dress",
+      "description": "Light floral dress, perfect for summer.",
+      "category": "Women",
+      "type": "Dresses",
+      "size": "M",
+      "brand": "Zara",
+      "color": "Floral",
+      "condition": "Excellent",
+      "price": 25,
+      "photos": [
+        "images/dress-floral.svg"
+      ],
+      "status": "sold",
+      "createdAt": "2026-10-20T10:00:00Z",
+      "views": 210
+    },
+    {
+      "id": "l18",
+      "sellerId": "u4",
+      "title": "Black hoodie",
+      "description": "Classic black hoodie, warm and soft.",
+      "category": "Streetwear",
+      "type": "Hoodies",
+      "size": "M",
+      "brand": "Adidas",
+      "color": "Black",
+      "condition": "Good",
+      "price": 20,
+      "photos": [
+        "images/hoodie-black.svg"
+      ],
+      "status": "sold",
+      "createdAt": "2026-10-18T10:00:00Z",
+      "views": 98
+    },
+    {
+      "id": "l19",
+      "sellerId": "u2",
+      "title": "Green T-shirt",
+      "description": "Green cotton T-shirt.",
+      "category": "Men",
+      "type": "T-shirts",
+      "size": "L",
+      "brand": "H&M",
+      "color": "Green",
+      "condition": "Excellent",
+      "price": 10,
+      "photos": [
+        "images/tshirt-green.svg"
+      ],
+      "status": "sold",
+      "createdAt": "2026-10-15T10:00:00Z",
+      "views": 54
+    },
+    {
+      "id": "l20",
+      "sellerId": "u1",
+      "title": "Forest green dress",
+      "description": "Long green dress, to finish describing.",
+      "category": "Women",
+      "type": "Dresses",
+      "size": "M",
+      "brand": "Mango",
+      "color": "Green",
+      "condition": "Like New",
+      "price": 40,
+      "photos": [
+        "images/dress-forest.svg"
+      ],
+      "status": "draft",
+      "createdAt": "2026-11-10T08:00:00Z",
+      "views": 0
+    }
+  ],
+  "reviews": [
+    {
+      "id": "r1",
+      "sellerId": "u1",
+      "authorName": "Amine K.",
+      "rating": 5,
+      "comment": "Jacket exactly as described, very friendly seller. Fast delivery to Sfax.",
+      "date": "2026-10-28T10:00:00Z"
+    },
+    {
+      "id": "r2",
+      "sellerId": "u1",
+      "authorName": "Ines M.",
+      "rating": 5,
+      "comment": "Lovely dress, perfectly clean. I recommend!",
+      "date": "2026-10-22T10:00:00Z"
+    },
+    {
+      "id": "r3",
+      "sellerId": "u1",
+      "authorName": "Youssef T.",
+      "rating": 4,
+      "comment": "Good item, slightly late answer but everything was fine.",
+      "date": "2026-10-10T10:00:00Z"
+    },
+    {
+      "id": "r4",
+      "sellerId": "u4",
+      "authorName": "Sarra B.",
+      "rating": 5,
+      "comment": "Beautiful vintage pieces, carefully packed. A real pleasure.",
+      "date": "2026-10-30T10:00:00Z"
+    },
+    {
+      "id": "r5",
+      "sellerId": "u4",
+      "authorName": "Mehdi H.",
+      "rating": 5,
+      "comment": "The hoodie is like new. Honest description of the condition.",
+      "date": "2026-10-19T10:00:00Z"
+    },
+    {
+      "id": "r6",
+      "sellerId": "u4",
+      "authorName": "Nour A.",
+      "rating": 4,
+      "comment": "Nice coat, the small repair was clearly mentioned. Thank you.",
+      "date": "2026-10-05T10:00:00Z"
+    },
+    {
+      "id": "r7",
+      "sellerId": "u2",
+      "authorName": "Sarra B.",
+      "rating": 4,
+      "comment": "Sneakers in good condition as announced. Easy meeting in Sfax.",
+      "date": "2026-10-25T10:00:00Z"
+    },
+    {
+      "id": "r8",
+      "sellerId": "u2",
+      "authorName": "Rania B.",
+      "rating": 5,
+      "comment": "Very responsive seller, item as described.",
+      "date": "2026-10-16T10:00:00Z"
+    }
+  ],
+  "favourites": [
+    {
+      "id": "f1",
+      "userId": "u1",
+      "listingId": "l10"
+    },
+    {
+      "id": "f2",
+      "userId": "u1",
+      "listingId": "l3"
+    }
+  ],
+  "messages": []
+}

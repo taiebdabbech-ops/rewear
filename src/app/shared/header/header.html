@@ -1,0 +1,70 @@
+<header class="header">
+  <div class="container header-top">
+    <button
+      type="button"
+      class="icon-btn menu-btn"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="main-nav"
+      aria-label="Open the menu"
+      (click)="toggleMenu()"
+    >
+      <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+    </button>
+
+    <a routerLink="/" class="logo" (click)="closeMenus()">REWEAR</a>
+
+    <form class="search" role="search" (submit)="search($event)">
+      <app-icon name="search" [size]="18" />
+      <input type="search" name="q" placeholder="Search for items, brands, sizes…" aria-label="Search" [value]="searchTerm()" (input)="onSearchInput($event)" />
+    </form>
+
+    <div class="header-actions">
+      @if (auth.user(); as user) {
+        <a routerLink="/account" [queryParams]="{ tab: 'favourites' }" class="icon-btn" aria-label="My favourites" (click)="closeMenus()">
+          <app-icon name="heart" />
+        </a>
+        <div class="account">
+          <button
+            type="button"
+            class="avatar-btn"
+            [attr.aria-expanded]="accountOpen()"
+            aria-haspopup="menu"
+            (click)="toggleAccount()"
+          >
+            <span class="avatar">{{ initials() }}</span>
+            <span class="hide-sm">{{ user.firstName }}</span>
+            <app-icon name="chevron-down" [size]="16" />
+          </button>
+          @if (accountOpen()) {
+            <div class="dropdown" role="menu">
+              <a role="menuitem" routerLink="/account" (click)="closeMenus()">My account</a>
+              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'listings' }" (click)="closeMenus()">My listings</a>
+              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'favourites' }" (click)="closeMenus()">My favourites</a>
+              <button role="menuitem" type="button" (click)="logout()">
+                <app-icon name="logout" [size]="16" /> Log out
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <a routerLink="/login" class="login-link hide-sm">Log in | Sign up</a>
+        <a routerLink="/login" class="icon-btn show-sm" aria-label="Log in">
+          <app-icon name="user" />
+        </a>
+      }
+      <a routerLink="/sell" class="btn btn-primary sell-btn" (click)="closeMenus()">
+        <app-icon name="plus" [size]="18" /> <span>Sell</span>
+      </a>
+    </div>
+  </div>
+
+  <nav id="main-nav" class="nav" [class.open]="menuOpen()" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a routerLink="/shop" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenus()">All items</a>
+      @for (category of categories; track category) {
+        <a [routerLink]="['/shop', category.toLowerCase()]" routerLinkActive="active" (click)="closeMenus()">{{ category }}</a>
+      }
+      <a routerLink="/how-it-works" routerLinkActive="active" class="nav-help" (click)="closeMenus()">How it works</a>
+    </div>
+  </nav>
+</header>

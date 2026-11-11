@@ -1,0 +1,124 @@
+<div class="container page auth-page">
+  <div class="auth-card panel">
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" [class.active]="currentMode() === 'login'" [attr.aria-selected]="currentMode() === 'login'" (click)="setMode('login')">Log in</button>
+      <button type="button" role="tab" [class.active]="currentMode() === 'signup'" [attr.aria-selected]="currentMode() === 'signup'" (click)="setMode('signup')">Sign up</button>
+    </div>
+
+    @if (currentMode() === 'login') {
+      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+        <h1>Welcome back</h1>
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input id="login-email" class="input" type="email" autocomplete="email" formControlName="email" placeholder="name&#64;example.com" [class.invalid]="loginInvalid('email')" />
+          @if (loginInvalid('email')) {
+            <span class="error">Enter a valid email address.</span>
+          }
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input id="login-password" class="input" type="password" autocomplete="current-password" formControlName="password" [class.invalid]="loginInvalid('password')" />
+          @if (loginInvalid('password')) {
+            <span class="error">Enter your password.</span>
+          }
+        </div>
+        @if (loginError()) {
+          <div class="alert" role="alert">{{ loginError() }}</div>
+        }
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="loading()">{{ loading() ? 'Logging in…' : 'Log in' }}</button>
+        <p class="switch">New on REWEAR? <button type="button" class="btn btn-ghost" (click)="setMode('signup')">Create an account</button></p>
+        <div class="demo">
+          <app-icon name="info" [size]="18" />
+          <span>Demo account: <strong>sarra&#64;rewear.tn</strong> / <strong>rewear123</strong></span>
+          <button type="button" class="btn btn-sm btn-secondary" (click)="fillDemo()">Fill in</button>
+        </div>
+      </form>
+    } @else {
+      <form [formGroup]="signupForm" (ngSubmit)="signup()" novalidate>
+        <h1>Create your account</h1>
+        <div class="form-row">
+          <div class="field">
+            <label for="first-name">First name</label>
+            <input id="first-name" class="input" autocomplete="given-name" formControlName="firstName" [class.invalid]="signupInvalid('firstName')" />
+            @if (signupInvalid('firstName')) {
+              <span class="error">Required.</span>
+            }
+          </div>
+          <div class="field">
+            <label for="last-name">Last name</label>
+            <input id="last-name" class="input" autocomplete="family-name" formControlName="lastName" [class.invalid]="signupInvalid('lastName')" />
+            @if (signupInvalid('lastName')) {
+              <span class="error">Required.</span>
+            }
+          </div>
+        </div>
+        <div class="field">
+          <label for="signup-email">Email</label>
+          <input id="signup-email" class="input" type="email" autocomplete="email" formControlName="email" [class.invalid]="signupInvalid('email')" />
+          @if (signupInvalid('email')) {
+            <span class="error">Enter a valid email address.</span>
+          }
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input id="phone" class="input" type="tel" autocomplete="tel" formControlName="phone" placeholder="+216 22 123 456" [class.invalid]="signupInvalid('phone')" />
+            @if (signupInvalid('phone')) {
+              <span class="error">8-digit Tunisian number.</span>
+            }
+          </div>
+          <div class="field">
+            <label for="city">City</label>
+            <select id="city" class="input" formControlName="city" [class.invalid]="signupInvalid('city')">
+              <option value="" disabled>Select</option>
+              @for (c of cities; track c) {
+                <option [value]="c">{{ c }}</option>
+              }
+            </select>
+            @if (signupInvalid('city')) {
+              <span class="error">Choose your city.</span>
+            }
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" class="input" type="password" autocomplete="new-password" formControlName="password" [class.invalid]="signupInvalid('password')" />
+            @if (signupInvalid('password')) {
+              <span class="error">At least 6 characters.</span>
+            }
+          </div>
+          <div class="field">
+            <label for="confirm">Confirm password</label>
+            <input id="confirm" class="input" type="password" autocomplete="new-password" formControlName="confirm" [class.invalid]="signupSubmitted() && signupForm.hasError('mismatch')" />
+            @if ((signupForm.controls.confirm.touched || signupSubmitted()) && signupForm.hasError('mismatch')) {
+              <span class="error">The passwords do not match.</span>
+            }
+          </div>
+        </div>
+        <label class="terms">
+          <input type="checkbox" formControlName="terms" />
+          <span>I accept the <a routerLink="/how-it-works" fragment="terms">Terms and privacy policy</a></span>
+        </label>
+        @if (signupInvalid('terms')) {
+          <span class="error block">You must accept the terms to create an account.</span>
+        }
+        @if (signupError()) {
+          <div class="alert" role="alert">{{ signupError() }}</div>
+        }
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="loading()">{{ loading() ? 'Creating…' : 'Create account' }}</button>
+        <p class="switch">Already registered? <button type="button" class="btn btn-ghost" (click)="setMode('login')">Log in</button></p>
+      </form>
+    }
+  </div>
+
+  <aside class="benefits">
+    <h2>Why create an account?</h2>
+    <ul>
+      <li><app-icon name="tag" /> Sell the clothes you no longer wear</li>
+      <li><app-icon name="heart" /> Save your favourite items</li>
+      <li><app-icon name="star" /> Build your reputation as a seller</li>
+    </ul>
+    <img src="images/jacket-blue.svg" alt="" />
+  </aside>
+</div>

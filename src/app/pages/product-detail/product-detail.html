@@ -1,0 +1,144 @@
+<div class="container page">
+  @if (listing(); as item) {
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a routerLink="/">Home</a> ›
+      <a [routerLink]="['/shop', item.category.toLowerCase()]">{{ item.category }}</a> ›
+      <strong>{{ item.title }}</strong>
+    </nav>
+
+    <div class="product">
+      <section class="gallery" aria-label="Photos">
+        <div class="main-photo">
+          <img [src]="mainPhoto()" [alt]="item.title" />
+          @if (item.status === 'sold') {
+            <span class="sold-flag">Sold</span>
+          }
+        </div>
+        @if (item.photos.length > 1) {
+          <div class="thumbs">
+            @for (photo of item.photos; track $index) {
+              <button
+                type="button"
+                [class.on]="$index === selectedPhoto()"
+                [attr.aria-label]="'Show photo ' + ($index + 1)"
+                (click)="selectedPhoto.set($index)"
+              >
+                <img [src]="photo" alt="" />
+              </button>
+            }
+          </div>
+        }
+      </section>
+
+      <section class="info">
+        <h1>{{ item.title }}</h1>
+        <p class="price">{{ item.price }} TND</p>
+        <div class="chips">
+          <span class="chip">Size {{ item.size }}</span>
+          <span class="chip">{{ item.brand }}</span>
+          <span class="chip">{{ item.type }}</span>
+        </div>
+
+        <div class="condition-box">
+          <app-condition-label [condition]="item.condition" [large]="true" />
+          <span>{{ conditionInfo[item.condition] }}</span>
+          <a routerLink="/how-it-works" fragment="conditions"><app-icon name="info" [size]="16" /> Condition guide</a>
+        </div>
+
+        @if (isOwner()) {
+          <div class="owner-note">
+            This is your listing.
+            <a routerLink="/account" [queryParams]="{ tab: 'listings' }">Manage it in My account</a>
+          </div>
+        } @else if (item.status === 'active') {
+          <div class="actions">
+            <button type="button" class="btn btn-primary" (click)="openContact()">
+              <app-icon name="message" [size]="18" /> Contact seller
+            </button>
+            <button type="button" class="btn btn-secondary" [attr.aria-pressed]="isFavourite()" (click)="toggleFavourite()">
+              <app-icon [name]="isFavourite() ? 'heart-filled' : 'heart'" [size]="18" />
+              {{ isFavourite() ? 'Saved' : 'Add to favourites' }}
+            </button>
+          </div>
+        } @else {
+          <p class="muted">This item has already been sold.</p>
+        }
+
+        @if (contactOpen()) {
+          <form class="contact" (submit)="$event.preventDefault(); sendMessage()">
+            <label for="message">Your message to the seller</label>
+            <textarea
+              id="message"
+              class="input"
+              rows="4"
+              placeholder="Hello! Is this item still available? Can we meet in Tunis?"
+              [value]="messageText()"
+              (input)="onMessage($event)"
+            ></textarea>
+            <p class="hint muted">Simulated in version 1: the message is saved but not delivered.</p>
+            <div class="contact-actions">
+              <button type="button" class="btn btn-ghost" (click)="contactOpen.set(false)">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="sending() || messageText().trim().length < 5">
+                {{ sending() ? 'Sending…' : 'Send message' }}
+              </button>
+            </div>
+          </form>
+        }
+
+        <h2 class="sub">Description</h2>
+        <p class="description">{{ item.description }}</p>
+
+        <dl class="details">
+          <div><dt>Brand</dt><dd>{{ item.brand }}</dd></div>
+          <div><dt>Size</dt><dd>{{ item.size }}</dd></div>
+          <div><dt>Colour</dt><dd>{{ item.color || '—' }}</dd></div>
+          <div><dt>Category</dt><dd>{{ item.category }} · {{ item.type }}</dd></div>
+          <div><dt>Posted</dt><dd [attr.title]="item.createdAt | date: 'd MMMM y'">{{ posted() }}</dd></div>
+          <div><dt>Views</dt><dd>{{ item.views }}</dd></div>
+        </dl>
+      </section>
+
+      <aside class="seller-card" aria-label="Seller">
+        @if (seller(); as s) {
+          <div class="seller-head">
+            <span class="avatar">{{ initials(s.firstName, s.lastName) }}</span>
+            <div>
+              <strong>{{ s.firstName }} {{ s.lastName.charAt(0) }}.</strong>
+              <app-seller-badge [badge]="s.badge" />
+            </div>
+          </div>
+          <app-star-rating [value]="rating().average" [count]="rating().count" />
+          <ul class="seller-stats">
+            <li><app-icon name="bag" [size]="16" /> {{ sales() }} {{ sales() === 1 ? 'sale' : 'sales' }}</li>
+            <li><app-icon name="pin" [size]="16" /> {{ s.city }}</li>
+          </ul>
+          <a class="btn btn-secondary btn-block" [routerLink]="['/seller', s.id]">View profile</a>
+        } @else {
+          <p class="muted">Seller information unavailable.</p>
+        }
+      </aside>
+    </div>
+
+    @if (moreFromSeller().length > 0) {
+      <div class="section-head">
+        <h2>More from this seller</h2>
+        @if (seller(); as s) {
+          <a [routerLink]="['/seller', s.id]">See all <app-icon name="arrow-right" [size]="16" /></a>
+        }
+      </div>
+      <div class="grid">
+        @for (other of moreFromSeller(); track other.id) {
+          <app-product-card [listing]="other" />
+        }
+      </div>
+    }
+  } @else if (loading()) {
+    <p class="state">Loading the item…</p>
+  } @else {
+    <div class="state">
+      <h2>Item not found</h2>
+      <p>It may have been removed by its seller.</p>
+      <a routerLink="/shop" class="btn btn-primary">Back to the shop</a>
+    </div>
+  }
+</div>

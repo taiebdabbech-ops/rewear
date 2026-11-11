@@ -1,0 +1,30 @@
+<article class="card">
+  <a class="card-link" [routerLink]="['/product', listing().id]">
+    <div class="card-img">
+      <img [src]="photo()" [alt]="listing().title" loading="lazy" />
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">{{ listing().title }}</h3>
+      <div class="card-meta">
+        <strong>{{ listing().price }} TND</strong>
+        <span>Size {{ listing().size }}</span>
+      </div>
+      <div class="card-tags">
+        <app-condition-label [condition]="listing().condition" />
+        @if (seller(); as s) {
+          <app-seller-badge [badge]="s.badge" />
+        }
+      </div>
+    </div>
+  </a>
+  <button
+    type="button"
+    class="fav"
+    [class.on]="isFavourite()"
+    [attr.aria-pressed]="isFavourite()"
+    [attr.aria-label]="isFavourite() ? 'Remove from favourites' : 'Add to favourites'"
+    (click)="toggleFavourite($event)"
+  >
+    <app-icon [name]="isFavourite() ? 'heart-filled' : 'heart'" [size]="16" />
+  </button>
+</article>

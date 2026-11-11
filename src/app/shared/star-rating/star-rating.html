@@ -1,0 +1,13 @@
+<span class="rating" [attr.aria-label]="label()" role="img">
+  <span class="stars" aria-hidden="true">
+    @for (filled of stars(); track $index) {
+      <span [class.on]="filled"><app-icon name="star" [size]="15" /></span>
+    }
+  </span>
+  @if (value() > 0) {
+    <strong>{{ value() }}</strong>
+  }
+  @if (count() !== null) {
+    <span class="count">({{ count() }} {{ count() === 1 ? 'review' : 'reviews' }})</span>
+  }
+</span>

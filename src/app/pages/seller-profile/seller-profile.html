@@ -1,0 +1,100 @@
+<div class="container page">
+  @if (seller(); as s) {
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a routerLink="/">Home</a> › <a routerLink="/shop">Shop</a> › <strong>{{ s.firstName }} {{ s.lastName.charAt(0) }}.</strong>
+    </nav>
+
+    <section class="profile-head">
+      <span class="avatar">{{ initials(s.firstName, s.lastName) }}</span>
+      <div class="identity">
+        <h1>{{ s.firstName }} {{ s.lastName.charAt(0) }}.</h1>
+        <app-seller-badge [badge]="s.badge" [large]="true" />
+        <p class="muted"><app-icon name="pin" [size]="15" /> {{ s.city }} · Member since {{ s.memberSince + '-01' | date: 'MMMM y' }}</p>
+      </div>
+      <dl class="stats">
+        <div><dt>Rating</dt><dd>{{ rating().count ? rating().average : '—' }}</dd></div>
+        <div><dt>Reviews</dt><dd>{{ rating().count }}</dd></div>
+        <div><dt>Sales</dt><dd>{{ sales() }}</dd></div>
+        <div><dt>For sale</dt><dd>{{ listings().length }}</dd></div>
+      </dl>
+    </section>
+
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" [class.active]="tab() === 'listings'" [attr.aria-selected]="tab() === 'listings'" (click)="tab.set('listings')">
+        Listings ({{ listings().length }})
+      </button>
+      <button type="button" role="tab" [class.active]="tab() === 'reviews'" [attr.aria-selected]="tab() === 'reviews'" (click)="tab.set('reviews')">
+        Reviews ({{ rating().count }})
+      </button>
+    </div>
+
+    @if (tab() === 'listings') {
+      <div class="grid">
+        @for (listing of listings(); track listing.id) {
+          <app-product-card [listing]="listing" />
+        } @empty {
+          <p class="muted">No item for sale at the moment.</p>
+        }
+      </div>
+    } @else {
+      <div class="reviews-layout">
+        <div class="panel summary">
+          <app-star-rating [value]="rating().average" [count]="rating().count" />
+          <ul class="bars">
+            @for (row of breakdown(); track row.stars) {
+              <li>
+                <span>{{ row.stars }} ★</span>
+                <span class="bar"><span [style.width.%]="row.percent"></span></span>
+                <span class="muted">{{ row.count }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div>
+          @if (canReview()) {
+            <form class="panel review-form" [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+              <h2>Leave a review</h2>
+              <div class="field">
+                <label for="rating">Rating</label>
+                <select id="rating" class="input" formControlName="rating">
+                  @for (r of ratingOptions; track r) {
+                    <option [ngValue]="r">{{ r }} {{ r === 1 ? 'star' : 'stars' }}</option>
+                  }
+                </select>
+              </div>
+              <div class="field">
+                <label for="comment">Comment</label>
+                <textarea id="comment" class="input" rows="3" formControlName="comment" placeholder="How was your experience with this seller?"></textarea>
+                @if (reviewForm.controls.comment.touched && reviewForm.controls.comment.invalid) {
+                  <span class="error">Write at least 10 characters.</span>
+                }
+              </div>
+              <button type="submit" class="btn btn-primary" [disabled]="submitting()">Publish review</button>
+            </form>
+          }
+
+          <ul class="review-list">
+            @for (review of reviews(); track review.id) {
+              <li class="panel">
+                <div class="review-head">
+                  <strong>{{ review.authorName }}</strong>
+                  <app-star-rating [value]="review.rating" />
+                  <span class="muted date">{{ review.date | date: 'd MMM y' }}</span>
+                </div>
+                <p>{{ review.comment }}</p>
+              </li>
+            } @empty {
+              <li class="muted">No reviews yet.</li>
+            }
+          </ul>
+        </div>
+      </div>
+    }
+  } @else {
+    <div class="state">
+      <h2>Seller not found</h2>
+      <a routerLink="/shop" class="btn btn-primary">Back to the shop</a>
+    </div>
+  }
+</div>

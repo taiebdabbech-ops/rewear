@@ -1,0 +1,30 @@
+.sell-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.sell-form { padding: 24px; }
+.photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+.photo { position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; background: var(--linen); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cover { position: absolute; left: 6px; top: 6px; background: var(--forest); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.photo-btn { position: absolute; right: 6px; top: 6px; border: none; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: var(--forest); cursor: pointer; padding: 5px 8px; font: inherit; font-size: 0.75rem; display: flex; align-items: center; }
+.photo-btn.left { left: 6px; right: auto; }
+.drop { aspect-ratio: 4 / 5; border: 1.5px dashed var(--sage); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: var(--forest); cursor: pointer; background: #fbfaf7; }
+.drop:hover, .drop:focus-within { border-color: var(--forest); background: var(--linen); }
+.drop.invalid { border-color: var(--danger); }
+.conditions { border: none; padding: 0; margin: 0 0 16px; }
+.radio-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.radio-card { border: 1px solid var(--sage); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; background: #fff; }
+.radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+.radio-card small { color: var(--stone); line-height: 1.3; }
+.radio-card.selected { border: 2px solid var(--forest); background: var(--linen); }
+.radio-card:focus-within { box-shadow: 0 0 0 2px rgba(38, 58, 48, 0.3); }
+.price-input { display: flex; align-items: center; gap: 8px; max-width: 220px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 8px; }
+.tips h2 { font-size: 1.2rem; }
+.tips ul { list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-direction: column; gap: 10px; }
+.tips li { display: flex; gap: 8px; align-items: flex-start; color: #444; }
+.tips li app-icon { color: var(--moss); margin-top: 3px; }
+@media (max-width: 900px) {
+  .sell-layout { grid-template-columns: 1fr; }
+  .radio-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.radio-grid.invalid .radio-card { border-color: var(--danger); }
