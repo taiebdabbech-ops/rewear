@@ -24,12 +24,13 @@ Web Project — **Objective 3: development and integration of the main features*
 |---|---|---|
 | Home | `/` | Hero with call to action, live figures (items for sale, items sold), categories, recent items, trusted sellers' items |
 | Shop | `/shop`, `/shop/:category` | Search (`?q=`), filters by size, price, brand, condition and seller badge, active-filter chips, sorting, pagination, mobile filter sheet |
-| Product details | `/product/:id` | Photo gallery, condition grade with explanation, seller card (badge, rating, sales), add to favourites, contact form (simulated), more items from the seller, view counter |
+| Product details | `/product/:id` | Photo gallery, condition grade with explanation, seller card (badge, rating, sales), add to favourites, contact form (simulated), more items from the seller, view counter, publish confirmation after a new listing |
 | Seller profile | `/seller/:id` | Badge, figures, listings, reviews with rating breakdown, **review form** |
 | Sell | `/sell` 🔒 | **Listing form** with validation, photo upload (resized in the browser), condition selector, publish or save as draft, **edit mode** (`/sell?edit=:id`) |
-| My account | `/account` 🔒 | My listings by status (active, sold, drafts) with edit, mark as sold, publish and delete (with confirmation); my favourites; my reputation; profile; log out |
+| My account | `/account` 🔒 | My listings by status (active, sold, drafts) with edit, mark as sold, publish and delete (with confirmation); my favourites; **my messages** (received and sent); my reputation; **profile settings** (edit details, change password); log out |
 | Log in / Sign up | `/login` | **Log-in and sign-up forms** with validation (email, Tunisian phone number, password confirmation, terms), demo account button |
-| How it works | `/how-it-works` | Buying and selling guides, condition grades, seller badges, FAQ, about, contact, terms |
+| Forgot password | `/forgot-password` | E-mail form and confirmation (simulated: no e-mail is sent, and the page never reveals whether an account exists) |
+| How it works | `/how-it-works` | Buying and selling guides, condition grades, seller badges, FAQ, about, terms, **contact form** (`#contact`) |
 | Not found | `**` | 404 page |
 
 🔒 = protected by an Angular route guard: visitors are sent to Log in, then brought back.
@@ -77,7 +78,9 @@ src/
       auth.service.ts      Simulated log-in / sign-up (localStorage)
       auth.guard.ts        Protects /sell and /account
       favourite.service.ts Favourites with optimistic updates
-      message.service.ts   "Contact seller" messages
+      message.service.ts   "Contact seller" messages and inbox
+      contact.service.ts   Contact form of the Support pages
+      validators.ts        Shared form rules (phone, cities, passwords match)
       toast.service.ts     Notifications
       listing-filter.ts    Pure filtering and sorting functions
       image-utils.ts       Photo resizing, "x days ago"
@@ -85,8 +88,9 @@ src/
       header, footer, product-card, condition-label, seller-badge,
       star-rating, icon, toast-container
     pages/                 One folder per page
-      home, shop, product-detail, seller-profile, sell, account,
-      auth, how-it-works, not-found
+      home, shop, product-detail, seller-profile, sell, account
+      (+ profile-settings, account-messages), auth, forgot-password,
+      how-it-works (+ contact-form), not-found
 ```
 
 ## 5. Technical notes
@@ -106,6 +110,11 @@ src/
 - Favourites: heart on a card while logged out (redirect to Log in) and logged in
 - Sell: empty form shows the error messages; publish with photos; save a draft; edit an item
 - My account: mark as sold, publish a draft, delete with confirmation
+- My account › My messages: log in as Sarra, 2 received and 1 sent message appear
+- My account › Profile: change your first name or city and save (the header and your public profile update); change the password with a wrong current password, then with the right one
+- Forgot password: invalid e-mail shows an error; a valid one shows the confirmation
+- Contact form (How it works › Contact): empty form errors, then send; the message appears in `db.json › contactMessages`
+- Publish a new item: the confirmation banner appears on its page
 - Log in with a wrong password, sign up with an existing email, password mismatch
 - Visit `/sell` while logged out: redirect to Log in, then back to Sell
 - Stop json-server: the error message and "Try again" button appear
@@ -115,7 +124,7 @@ src/
 ## 7. Limits of this version
 
 - Authentication is **simulated**: passwords are stored in clear text in `db.json`. Never use a real password.
-- "Contact seller" saves the message but does not deliver it; seller verification badges are simulated.
+- "Contact seller" and the contact form save the message but send no e-mail; there is no reply feature yet. Password reset is simulated. Seller verification badges are simulated.
 - No online payment (cash on delivery planned).
 - json-server replaces a real back-end and SQL database for this objective.
 

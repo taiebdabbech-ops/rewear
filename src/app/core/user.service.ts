@@ -53,6 +53,11 @@ export class UserService {
     this._users.update((list) => [...list, user]);
   }
 
+  /** Replaces a user in the local list after a profile update. */
+  replaceLocal(user: User): void {
+    this._users.update((list) => list.map((u) => (u.id === user.id ? user : u)));
+  }
+
   addReview(review: Review): Observable<Review> {
     return this.http
       .post<Review>(`${API_URL}/reviews`, review)

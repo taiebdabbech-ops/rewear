@@ -216,7 +216,8 @@ export class Sell {
         this.saving.set(false);
         if (status === 'active') {
           this.toast.show(existing ? 'Your listing is updated.' : 'Your item is online!');
-          this.router.navigate(['/product', saved.id]);
+          // ?published=new shows the publish confirmation on the product page.
+          this.router.navigate(['/product', saved.id], existing ? {} : { queryParams: { published: 'new' } });
         } else {
           this.toast.show('Draft saved in My account.', 'info');
           this.router.navigate(['/account'], { queryParams: { tab: 'listings' } });

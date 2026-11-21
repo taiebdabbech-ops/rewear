@@ -1,6 +1,7 @@
 .auth-page { display: grid; grid-template-columns: minmax(0, 560px) 1fr; gap: 32px; align-items: start; }
 .auth-card { padding: 28px; }
 .auth-card h1 { font-size: 1.8rem; }
+.forgot { align-self: flex-end; font-size: 0.9rem; }
 .switch { text-align: center; margin: 14px 0 0; color: var(--stone); }
 .demo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--linen); border-radius: var(--radius); padding: 10px 12px; margin-top: 18px; color: var(--forest); font-size: 0.9rem; }
 .demo span { flex: 1; }

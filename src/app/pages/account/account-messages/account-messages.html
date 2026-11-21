@@ -1,0 +1,46 @@
+<div class="tabs" role="tablist" aria-label="Message boxes">
+  @for (b of boxes; track b.id) {
+    <button type="button" role="tab" [class.active]="box() === b.id" [attr.aria-selected]="box() === b.id" (click)="box.set(b.id)">
+      {{ b.label }} ({{ count(b.id) }})
+    </button>
+  }
+</div>
+
+@if (loading()) {
+  <ul class="messages" aria-busy="true" aria-label="Loading messages">
+    @for (i of [1, 2, 3]; track i) {
+      <li class="message skeleton-line"><span class="skeleton thumb"></span><span class="skeleton text"></span></li>
+    }
+  </ul>
+} @else if (error()) {
+  <div class="alert" role="alert">
+    Messages cannot be loaded. Is json-server running on port 3000?
+    <button type="button" class="btn btn-sm btn-secondary" (click)="load()">Try again</button>
+  </div>
+} @else {
+  <ul class="messages">
+    @for (item of items(); track item.message.id) {
+      <li class="message">
+        <img [src]="item.listingPhoto" alt="" />
+        <div class="body">
+          <div class="meta">
+            <strong>{{ box() === 'received' ? 'From' : 'To' }} {{ item.otherName }}</strong>
+            <span class="muted">· {{ item.when }}</span>
+          </div>
+          <a class="listing" [routerLink]="['/product', item.listingId]">{{ item.listingTitle }}</a>
+          <p>{{ item.message.text }}</p>
+        </div>
+      </li>
+    } @empty {
+      <li class="state">
+        @if (box() === 'received') {
+          <p>No message yet. Buyers write to you from the page of your items.</p>
+        } @else {
+          <p>You have not contacted a seller yet.</p>
+          <a routerLink="/shop" class="btn btn-primary">Browse items</a>
+        }
+      </li>
+    }
+  </ul>
+  <p class="muted note">Simulation: messages are stored by json-server only. No e-mail is sent.</p>
+}

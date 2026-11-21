@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { map, Observable, of, switchMap, tap } from 'rxjs';
+import { map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { API_URL } from './api';
 import { newId, PublicUser, toPublicUser, User } from './models';
 import { UserService } from './user.service';
@@ -8,6 +8,9 @@ import { UserService } from './user.service';
 const STORAGE_KEY = 'rewear.currentUser';
 
 export type SignupData = Omit<User, 'id' | 'badge' | 'memberSince'>;
+
+/** Profile fields a member may change himself (e-mail, badge and dates stay fixed). */
+export type ProfileChanges = Pick<User, 'firstName' | 'lastName' | 'phone' | 'city'>;
 
 /**
  * Simulated authentication (as announced in our sitemap): accounts are stored by json-server
@@ -55,6 +58,36 @@ export class AuthService {
           map(() => 'ok' as const),
         );
       }),
+    );
+  }
+
+  /** Saves the profile (PATCH /users/:id) and refreshes the logged-in user everywhere. */
+  updateProfile(changes: ProfileChanges): Observable<PublicUser> {
+    const current = this._user();
+    if (!current) return throwError(() => new Error('Not logged in'));
+    return this.http.patch<User>(`${API_URL}/users/${current.id}`, changes).pipe(
+      tap((updated) => {
+        this.users.replaceLocal(updated);
+        this.setUser(updated);
+      }),
+      map((updated) => toPublicUser(updated)),
+    );
+  }
+
+  /**
+   * Simulated password change: reads the account, checks the current password,
+   * then saves the new one. A real back-end would do this check on the server.
+   */
+  changePassword(currentPassword: string, newPassword: string): Observable<'ok' | 'wrong-password'> {
+    const current = this._user();
+    if (!current) return throwError(() => new Error('Not logged in'));
+    const url = `${API_URL}/users/${current.id}`;
+    return this.http.get<User>(url).pipe(
+      switchMap((user) =>
+        user.password !== currentPassword
+          ? of('wrong-password' as const)
+          : this.http.patch<User>(url, { password: newPassword }).pipe(map(() => 'ok' as const)),
+      ),
     );
   }
 

@@ -505,5 +505,31 @@
       "listingId": "l3"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": "m1",
+      "listingId": "l1",
+      "sellerId": "u1",
+      "fromUserId": "u2",
+      "text": "Hi Sarra, is the denim jacket still available? I can pick it up in Tunis this weekend.",
+      "date": "2026-11-08T09:20:00.000Z"
+    },
+    {
+      "id": "m2",
+      "listingId": "l2",
+      "sellerId": "u1",
+      "fromUserId": "u3",
+      "text": "Hello! Could you tell me the length of the wrap dress? Thank you.",
+      "date": "2026-11-10T17:45:00.000Z"
+    },
+    {
+      "id": "m3",
+      "listingId": "l3",
+      "sellerId": "u2",
+      "fromUserId": "u1",
+      "text": "Hi Amine, would you accept 55 TND for the sneakers?",
+      "date": "2026-11-09T12:05:00.000Z"
+    }
+  ],
+  "contactMessages": []
 }
