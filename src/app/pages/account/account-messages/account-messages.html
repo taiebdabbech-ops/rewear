@@ -1,6 +1,12 @@
 <div class="tabs" role="tablist" aria-label="Message boxes">
   @for (b of boxes; track b.id) {
-    <button type="button" role="tab" [class.active]="box() === b.id" [attr.aria-selected]="box() === b.id" (click)="box.set(b.id)">
+    <button
+      type="button"
+      role="tab"
+      [class.active]="box() === b.id"
+      [attr.aria-selected]="box() === b.id"
+      (click)="box.set(b.id)"
+    >
       {{ b.label }} ({{ count(b.id) }})
     </button>
   }
@@ -9,7 +15,9 @@
 @if (loading()) {
   <ul class="messages" aria-busy="true" aria-label="Loading messages">
     @for (i of [1, 2, 3]; track i) {
-      <li class="message skeleton-line"><span class="skeleton thumb"></span><span class="skeleton text"></span></li>
+      <li class="message skeleton-line">
+        <span class="skeleton thumb"></span><span class="skeleton text"></span>
+      </li>
     }
   </ul>
 } @else if (error()) {

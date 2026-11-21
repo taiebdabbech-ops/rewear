@@ -8,7 +8,9 @@
     <form class="panel sell-form" [formGroup]="form" (ngSubmit)="save('active')" novalidate>
       <!-- Photos -->
       <section class="field">
-        <span class="label">Photos <span class="muted">({{ photos().length }}/{{ maxPhotos }})</span></span>
+        <span class="label"
+          >Photos <span class="muted">({{ photos().length }}/{{ maxPhotos }})</span></span
+        >
         <div class="photos">
           @for (photo of photos(); track $index) {
             <div class="photo">
@@ -16,9 +18,16 @@
               @if ($index === 0) {
                 <span class="cover">Cover</span>
               } @else {
-                <button type="button" class="photo-btn left" (click)="makeCover($index)">Set as cover</button>
+                <button type="button" class="photo-btn left" (click)="makeCover($index)">
+                  Set as cover
+                </button>
               }
-              <button type="button" class="photo-btn" [attr.aria-label]="'Remove photo ' + ($index + 1)" (click)="removePhoto($index)">
+              <button
+                type="button"
+                class="photo-btn"
+                [attr.aria-label]="'Remove photo ' + ($index + 1)"
+                (click)="removePhoto($index)"
+              >
                 <app-icon name="trash" [size]="16" />
               </button>
             </div>
@@ -27,7 +36,13 @@
             <label class="drop" [class.invalid]="submitted() && photos().length === 0">
               <app-icon name="upload" [size]="26" />
               <span><strong>Add photos</strong><br /><small>JPG, PNG or WebP</small></span>
-              <input type="file" accept="image/*" multiple (change)="onFiles($event)" class="sr-only" />
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                (change)="onFiles($event)"
+                class="sr-only"
+              />
             </label>
           }
         </div>
@@ -41,7 +56,13 @@
 
       <div class="field">
         <label for="title">Title</label>
-        <input id="title" class="input" formControlName="title" placeholder="e.g. Levi's denim jacket" [class.invalid]="invalid('title')" />
+        <input
+          id="title"
+          class="input"
+          formControlName="title"
+          placeholder="e.g. Levi's denim jacket"
+          [class.invalid]="invalid('title')"
+        />
         @if (invalid('title')) {
           <span class="error">Between 4 and 60 characters.</span>
         }
@@ -49,7 +70,14 @@
 
       <div class="field">
         <label for="description">Description</label>
-        <textarea id="description" class="input" formControlName="description" rows="5" placeholder="Describe the item, its fit and any defect" [class.invalid]="invalid('description')"></textarea>
+        <textarea
+          id="description"
+          class="input"
+          formControlName="description"
+          rows="5"
+          placeholder="Describe the item, its fit and any defect"
+          [class.invalid]="invalid('description')"
+        ></textarea>
         <span class="hint">{{ form.controls.description.value.length }}/600 characters</span>
         @if (invalid('description')) {
           <span class="error">At least 20 characters, so buyers know what they get.</span>
@@ -59,7 +87,12 @@
       <div class="form-row">
         <div class="field">
           <label for="category">Category</label>
-          <select id="category" class="input" formControlName="category" [class.invalid]="invalid('category')">
+          <select
+            id="category"
+            class="input"
+            formControlName="category"
+            [class.invalid]="invalid('category')"
+          >
             <option value="" disabled>Select</option>
             @for (c of categories; track c) {
               <option [value]="c">{{ c }}</option>
@@ -98,7 +131,13 @@
       <div class="form-row">
         <div class="field">
           <label for="brand">Brand</label>
-          <input id="brand" class="input" formControlName="brand" placeholder="e.g. Zara" [class.invalid]="invalid('brand')" />
+          <input
+            id="brand"
+            class="input"
+            formControlName="brand"
+            placeholder="e.g. Zara"
+            [class.invalid]="invalid('brand')"
+          />
           @if (invalid('brand')) {
             <span class="error">Write the brand (or “Unbranded”).</span>
           }
@@ -128,7 +167,15 @@
       <div class="field price">
         <label for="price">Price</label>
         <div class="price-input">
-          <input id="price" class="input" type="number" min="1" max="5000" formControlName="price" [class.invalid]="invalid('price')" />
+          <input
+            id="price"
+            class="input"
+            type="number"
+            min="1"
+            max="5000"
+            formControlName="price"
+            [class.invalid]="invalid('price')"
+          />
           <span>TND</span>
         </div>
         @if (invalid('price')) {
@@ -137,7 +184,14 @@
       </div>
 
       <div class="form-actions">
-        <button type="button" class="btn btn-secondary" [disabled]="saving()" (click)="save('draft')">Save draft</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [disabled]="saving()"
+          (click)="save('draft')"
+        >
+          Save draft
+        </button>
         <button type="submit" class="btn btn-primary" [disabled]="saving()">
           {{ saving() ? 'Saving…' : editing() ? 'Save changes' : 'Publish' }}
         </button>
@@ -147,10 +201,18 @@
     <aside class="panel tips">
       <h2>Tips to sell faster</h2>
       <ul>
-        <li><app-icon name="check" [size]="16" /> Take photos in daylight, on a plain background.</li>
-        <li><app-icon name="check" [size]="16" /> Show the label and any defect: buyers trust honest listings.</li>
+        <li>
+          <app-icon name="check" [size]="16" /> Take photos in daylight, on a plain background.
+        </li>
+        <li>
+          <app-icon name="check" [size]="16" /> Show the label and any defect: buyers trust honest
+          listings.
+        </li>
         <li><app-icon name="check" [size]="16" /> Give real measurements in the description.</li>
-        <li><app-icon name="check" [size]="16" /> Choose the condition grade carefully: it is what buyers check first.</li>
+        <li>
+          <app-icon name="check" [size]="16" /> Choose the condition grade carefully: it is what
+          buyers check first.
+        </li>
       </ul>
       <a routerLink="/how-it-works" fragment="selling">Read the selling guide</a>
     </aside>

@@ -4,8 +4,13 @@ import { API_URL } from './api';
 import { AuthService } from './auth.service';
 import { Favourite, newId } from './models';
 
+/** What happened after a click on a heart (used to choose the toast message). */
 export type FavouriteResult = 'added' | 'removed' | 'login-required';
 
+/**
+ * Favourites ("hearts") of the logged-in user, stored in json-server
+ * (GET, POST and DELETE /favourites).
+ */
 @Injectable({ providedIn: 'root' })
 export class FavouriteService {
   private readonly http = inject(HttpClient);

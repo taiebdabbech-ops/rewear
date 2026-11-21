@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
@@ -19,6 +27,7 @@ import {
 import { ToastService } from '../../core/toast.service';
 import { Icon } from '../../shared/icon/icon';
 
+/** Most photos a listing can have (the first one is the cover). */
 const MAX_PHOTOS = 4;
 
 /** Field labels used in the error message. */
@@ -34,6 +43,10 @@ const FIELD_LABELS: Record<string, string> = {
   price: 'Price',
 };
 
+/**
+ * Sell page (members only): publish a new item, edit one (?edit=id) or save a draft.
+ * Photos are reduced in the browser (image-utils) before being saved in db.json.
+ */
 @Component({
   selector: 'app-sell',
   imports: [ReactiveFormsModule, RouterLink, Icon],
@@ -58,11 +71,14 @@ export class Sell {
   readonly sizes = SIZES;
   readonly maxPhotos = MAX_PHOTOS;
 
+  /** Photos chosen so far, as data URLs or image paths. */
   readonly photos = signal<string[]>([]);
   readonly submitted = signal(false);
+  /** True while the API saves: the buttons are disabled. */
   readonly saving = signal(false);
   readonly photoError = signal<string | null>(null);
 
+  /** Form rules: title 4-60 characters, description 20-600, price from 1 to 5000 TND… */
   readonly form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(60)]],
     description: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(600)]],
@@ -84,6 +100,7 @@ export class Sell {
     return listing && listing.sellerId === user.id ? listing : undefined;
   });
 
+  /** Id of the listing already copied into the form (avoids erasing what the user types). */
   private filledFor: string | null = null;
 
   constructor() {
@@ -129,12 +146,17 @@ export class Sell {
     setTimeout(() => {
       const first = document.querySelector<HTMLElement>('.sell-form .invalid');
       first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if (first instanceof HTMLInputElement || first instanceof HTMLTextAreaElement || first instanceof HTMLSelectElement) {
+      if (
+        first instanceof HTMLInputElement ||
+        first instanceof HTMLTextAreaElement ||
+        first instanceof HTMLSelectElement
+      ) {
         first.focus({ preventScroll: true });
       }
     });
   }
 
+  /** Photos chosen with the file picker: checks the type and the number, then reduces each one. */
   async onFiles(event: Event): Promise<void> {
     const inputElement = event.target as HTMLInputElement;
     const files = Array.from(inputElement.files ?? []);
@@ -159,14 +181,20 @@ export class Sell {
     }
   }
 
+  /** × button on a photo. */
   removePhoto(index: number): void {
     this.photos.update((list) => list.filter((_, i) => i !== index));
   }
 
+  /** "Make cover": moves the photo to the first place (shown on the cards). */
   makeCover(index: number): void {
     this.photos.update((list) => [list[index], ...list.filter((_, i) => i !== index)]);
   }
 
+  /**
+   * "Publish" (status 'active': every field is required) or "Save draft" (status 'draft':
+   * only the title is required). Creates the listing, or updates it in edit mode.
+   */
   save(status: ListingStatus): void {
     this.submitted.set(true);
     const user = this.auth.user();
@@ -217,7 +245,10 @@ export class Sell {
         if (status === 'active') {
           this.toast.show(existing ? 'Your listing is updated.' : 'Your item is online!');
           // ?published=new shows the publish confirmation on the product page.
-          this.router.navigate(['/product', saved.id], existing ? {} : { queryParams: { published: 'new' } });
+          this.router.navigate(
+            ['/product', saved.id],
+            existing ? {} : { queryParams: { published: 'new' } },
+          );
         } else {
           this.toast.show('Draft saved in My account.', 'info');
           this.router.navigate(['/account'], { queryParams: { tab: 'listings' } });

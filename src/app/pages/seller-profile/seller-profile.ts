@@ -12,8 +12,13 @@ import { ProductCard } from '../../shared/product-card/product-card';
 import { SellerBadge } from '../../shared/seller-badge/seller-badge';
 import { StarRating } from '../../shared/star-rating/star-rating';
 
+/** The two tabs of the public profile. */
 type SellerTab = 'listings' | 'reviews';
 
+/**
+ * Public profile of a seller: badge, mark, number of sales, items for sale and reviews.
+ * Logged-in members can leave a review (POST /reviews).
+ */
 @Component({
   selector: 'app-seller-profile',
   imports: [RouterLink, DatePipe, ReactiveFormsModule, ProductCard, SellerBadge, StarRating, Icon],
@@ -36,7 +41,10 @@ export class SellerProfile {
   readonly submitting = signal(false);
 
   readonly seller = computed(() => this.users.byId(this.id()));
-  readonly listings = computed(() => this.listingService.active().filter((l) => l.sellerId === this.id()));
+  /** Items this seller has for sale now. */
+  readonly listings = computed(() =>
+    this.listingService.active().filter((l) => l.sellerId === this.id()),
+  );
   readonly sales = computed(
     () => this.listingService.bySeller(this.id()).filter((l) => l.status === 'sold').length,
   );
@@ -48,7 +56,11 @@ export class SellerProfile {
     const reviews = this.reviews();
     return this.ratingOptions.map((stars) => {
       const count = reviews.filter((r) => r.rating === stars).length;
-      return { stars, count, percent: reviews.length ? Math.round((count / reviews.length) * 100) : 0 };
+      return {
+        stars,
+        count,
+        percent: reviews.length ? Math.round((count / reviews.length) * 100) : 0,
+      };
     });
   });
 
@@ -58,15 +70,18 @@ export class SellerProfile {
     return !!user && user.id !== this.id();
   });
 
+  /** Review form: mark from 1 to 5 and a comment of 10 to 300 characters. */
   readonly reviewForm = this.fb.nonNullable.group({
     rating: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
     comment: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(300)]],
   });
 
+  /** Letters of the seller avatar. */
   initials(firstName: string, lastName: string): string {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   }
 
+  /** Publishes the review, then empties the form. */
   submitReview(): void {
     const user = this.auth.user();
     if (!user) return;

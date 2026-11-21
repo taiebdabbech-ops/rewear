@@ -11,12 +11,24 @@
         <span class="icon-circle"><app-icon name="check" [size]="24" /></span>
         <div class="published-text">
           <strong>Your item is online!</strong>
-          <span class="muted">Buyers can now find it in the shop and in the {{ item.category }} category.</span>
+          <span class="muted"
+            >Buyers can now find it in the shop and in the {{ item.category }} category.</span
+          >
         </div>
         <div class="published-actions">
-          <a class="btn btn-sm btn-secondary" routerLink="/account" [queryParams]="{ tab: 'listings' }">See my listings</a>
+          <a
+            class="btn btn-sm btn-secondary"
+            routerLink="/account"
+            [queryParams]="{ tab: 'listings' }"
+            >See my listings</a
+          >
           <a class="btn btn-sm btn-primary" routerLink="/sell">Sell another item</a>
-          <button type="button" class="close" aria-label="Close this message" (click)="confirmationClosed.set(true)">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close this message"
+            (click)="confirmationClosed.set(true)"
+          >
             <app-icon name="close" [size]="18" />
           </button>
         </div>
@@ -59,7 +71,9 @@
         <div class="condition-box">
           <app-condition-label [condition]="item.condition" [large]="true" />
           <span>{{ conditionInfo[item.condition] }}</span>
-          <a routerLink="/how-it-works" fragment="conditions"><app-icon name="info" [size]="16" /> Condition guide</a>
+          <a routerLink="/how-it-works" fragment="conditions"
+            ><app-icon name="info" [size]="16" /> Condition guide</a
+          >
         </div>
 
         @if (isOwner()) {
@@ -72,7 +86,12 @@
             <button type="button" class="btn btn-primary" (click)="openContact()">
               <app-icon name="message" [size]="18" /> Contact seller
             </button>
-            <button type="button" class="btn btn-secondary" [attr.aria-pressed]="isFavourite()" (click)="toggleFavourite()">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [attr.aria-pressed]="isFavourite()"
+              (click)="toggleFavourite()"
+            >
               <app-icon [name]="isFavourite() ? 'heart-filled' : 'heart'" [size]="18" />
               {{ isFavourite() ? 'Saved' : 'Add to favourites' }}
             </button>
@@ -92,10 +111,18 @@
               [value]="messageText()"
               (input)="onMessage($event)"
             ></textarea>
-            <p class="hint muted">Simulated in version 1: the message is saved but not delivered.</p>
+            <p class="hint muted">
+              Simulated in version 1: the message is saved but not delivered.
+            </p>
             <div class="contact-actions">
-              <button type="button" class="btn btn-ghost" (click)="contactOpen.set(false)">Cancel</button>
-              <button type="submit" class="btn btn-primary" [disabled]="sending() || messageText().trim().length < 5">
+              <button type="button" class="btn btn-ghost" (click)="contactOpen.set(false)">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="sending() || messageText().trim().length < 5"
+              >
                 {{ sending() ? 'Sending…' : 'Send message' }}
               </button>
             </div>
@@ -106,12 +133,30 @@
         <p class="description">{{ item.description }}</p>
 
         <dl class="details">
-          <div><dt>Brand</dt><dd>{{ item.brand }}</dd></div>
-          <div><dt>Size</dt><dd>{{ item.size }}</dd></div>
-          <div><dt>Colour</dt><dd>{{ item.color || '—' }}</dd></div>
-          <div><dt>Category</dt><dd>{{ item.category }} · {{ item.type }}</dd></div>
-          <div><dt>Posted</dt><dd [attr.title]="item.createdAt | date: 'd MMMM y'">{{ posted() }}</dd></div>
-          <div><dt>Views</dt><dd>{{ item.views }}</dd></div>
+          <div>
+            <dt>Brand</dt>
+            <dd>{{ item.brand }}</dd>
+          </div>
+          <div>
+            <dt>Size</dt>
+            <dd>{{ item.size }}</dd>
+          </div>
+          <div>
+            <dt>Colour</dt>
+            <dd>{{ item.color || '—' }}</dd>
+          </div>
+          <div>
+            <dt>Category</dt>
+            <dd>{{ item.category }} · {{ item.type }}</dd>
+          </div>
+          <div>
+            <dt>Posted</dt>
+            <dd [attr.title]="item.createdAt | date: 'd MMMM y'">{{ posted() }}</dd>
+          </div>
+          <div>
+            <dt>Views</dt>
+            <dd>{{ item.views }}</dd>
+          </div>
         </dl>
       </section>
 
@@ -126,7 +171,10 @@
           </div>
           <app-star-rating [value]="rating().average" [count]="rating().count" />
           <ul class="seller-stats">
-            <li><app-icon name="bag" [size]="16" /> {{ sales() }} {{ sales() === 1 ? 'sale' : 'sales' }}</li>
+            <li>
+              <app-icon name="bag" [size]="16" /> {{ sales() }}
+              {{ sales() === 1 ? 'sale' : 'sales' }}
+            </li>
             <li><app-icon name="pin" [size]="16" /> {{ s.city }}</li>
           </ul>
           <a class="btn btn-secondary btn-block" [routerLink]="['/seller', s.id]">View profile</a>
@@ -140,7 +188,9 @@
       <div class="section-head">
         <h2>More from this seller</h2>
         @if (seller(); as s) {
-          <a [routerLink]="['/seller', s.id]">See all <app-icon name="arrow-right" [size]="16" /></a>
+          <a [routerLink]="['/seller', s.id]"
+            >See all <app-icon name="arrow-right" [size]="16"
+          /></a>
         }
       </div>
       <div class="grid">
@@ -150,7 +200,17 @@
       </div>
     }
   } @else if (loading()) {
-    <p class="state">Loading the item…</p>
+    <p class="sr-only" role="status">Loading the item…</p>
+    <div class="detail-skeleton" aria-hidden="true">
+      <div class="skeleton photo"></div>
+      <div class="lines">
+        <div class="skeleton line title"></div>
+        <div class="skeleton line short"></div>
+        <div class="skeleton line"></div>
+        <div class="skeleton line"></div>
+        <div class="skeleton line short"></div>
+      </div>
+    </div>
   } @else {
     <div class="state">
       <h2>Item not found</h2>

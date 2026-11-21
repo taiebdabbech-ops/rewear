@@ -10,9 +10,12 @@ import { Condition, CONDITION_INFO } from '../../core/models';
 })
 export class ConditionLabel {
   readonly condition = input.required<Condition>();
+  /** Bigger version used on the product page. */
   readonly large = input(false);
 
+  /** Explanation shown as a tooltip when the mouse is on the label. */
   readonly info = computed(() => CONDITION_INFO[this.condition()]);
+  /** CSS classes: one colour per grade (cond-ln, cond-ex, cond-go, cond-fa). */
   readonly classes = computed(() => {
     const grade: Record<Condition, string> = {
       'Like New': 'ln',

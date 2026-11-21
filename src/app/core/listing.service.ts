@@ -31,6 +31,7 @@ export class ListingService {
   /** Number of items sold on REWEAR (shown as the impact counter). */
   readonly soldCount = computed(() => this._listings().filter((l) => l.status === 'sold').length);
 
+  /** GET /listings once at start-up; loading and error drive the skeletons and alerts. */
   load(): void {
     this._loading.set(true);
     this._error.set(null);
@@ -40,32 +41,43 @@ export class ListingService {
         this._loading.set(false);
       },
       error: () => {
-        this._error.set('Cannot reach the REWEAR API. Start it with: npx json-server --watch db.json --port 3000');
+        this._error.set(
+          'Cannot reach the REWEAR API. Start it with: npx json-server --watch db.json --port 3000',
+        );
         this._loading.set(false);
       },
     });
   }
 
+  /** Finds a listing in the list already loaded. */
   byId(id: string): Listing | undefined {
     return this._listings().find((l) => l.id === id);
   }
 
+  /** All the listings of one seller (active, sold and drafts). */
   bySeller(sellerId: string): Listing[] {
     return this._listings().filter((l) => l.sellerId === sellerId);
   }
 
+  /** POST /listings, then adds the new item at the top of the local list. */
   create(listing: Listing): Observable<Listing> {
     return this.http
       .post<Listing>(this.url, listing)
       .pipe(tap((created) => this._listings.update((list) => [created, ...list])));
   }
 
+  /** PATCH /listings/:id (edit, mark as sold, views), then updates the local copy. */
   update(id: string, changes: Partial<Listing>): Observable<Listing> {
     return this.http
       .patch<Listing>(`${this.url}/${id}`, changes)
-      .pipe(tap((updated) => this._listings.update((list) => list.map((l) => (l.id === id ? updated : l)))));
+      .pipe(
+        tap((updated) =>
+          this._listings.update((list) => list.map((l) => (l.id === id ? updated : l))),
+        ),
+      );
   }
 
+  /** DELETE /listings/:id, then removes it from the local list. */
   remove(id: string): Observable<unknown> {
     return this.http
       .delete(`${this.url}/${id}`)

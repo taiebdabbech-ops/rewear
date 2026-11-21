@@ -26,11 +26,13 @@ export class ForgotPassword {
     email: ['', [Validators.required, Validators.email]],
   });
 
+  /** True when the e-mail is wrong and the user already touched the field or pressed Send. */
   invalid(): boolean {
     const control = this.form.controls.email;
     return control.invalid && (control.touched || this.submitted());
   }
 
+  /** Checks the form, then shows the neutral confirmation (no API call in this simulation). */
   send(): void {
     this.submitted.set(true);
     if (this.form.invalid) return;

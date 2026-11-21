@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { routes } from './app.routes';
 
+/** Services available in the whole application (router, HTTP client, error listeners). */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

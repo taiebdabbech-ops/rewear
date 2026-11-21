@@ -1,7 +1,9 @@
 import { Badge, Condition, Listing, SIZES } from './models';
 
+/** Sort orders offered on the shop page. */
 export type SortOption = 'newest' | 'price-asc' | 'price-desc';
 
+/** Everything the visitor chose on the shop page (category, search, sidebar filters, sort). */
 export interface ListingFilters {
   category?: string;
   query?: string;
@@ -14,6 +16,7 @@ export interface ListingFilters {
   sort: SortOption;
 }
 
+/** Filters when nothing is selected ("Reset filters" goes back to this). */
 export const EMPTY_FILTERS: ListingFilters = {
   sizes: [],
   conditions: [],
@@ -58,6 +61,7 @@ export function filterListings(
   return sortListings(result, filters.sort);
 }
 
+/** Returns a sorted copy (the original array is not changed). */
 export function sortListings(listings: Listing[], sort: SortOption): Listing[] {
   const copy = [...listings];
   if (sort === 'price-asc') return copy.sort((a, b) => a.price - b.price);

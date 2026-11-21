@@ -8,8 +8,24 @@
   white-space: nowrap;
   line-height: 1.5;
 }
-.cond-lg { font-size: 0.875rem; padding: 3px 12px; }
-.cond-ln { background: var(--forest); color: #fff; }
-.cond-ex { background: var(--moss); color: #fff; }
-.cond-go { background: var(--mist); color: var(--forest); }
-.cond-fa { background: #fff; color: var(--charcoal); border: 1px solid var(--grey); }
+.cond-lg {
+  font-size: 0.875rem;
+  padding: 3px 12px;
+}
+.cond-ln {
+  background: var(--forest);
+  color: #fff;
+}
+.cond-ex {
+  background: var(--moss);
+  color: #fff;
+}
+.cond-go {
+  background: var(--mist);
+  color: var(--forest);
+}
+.cond-fa {
+  background: #fff;
+  color: var(--charcoal);
+  border: 1px solid var(--grey);
+}

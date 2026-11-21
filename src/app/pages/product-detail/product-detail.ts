@@ -24,6 +24,10 @@ import { ProductCard } from '../../shared/product-card/product-card';
 import { SellerBadge } from '../../shared/seller-badge/seller-badge';
 import { StarRating } from '../../shared/star-rating/star-rating';
 
+/**
+ * Product page: photo gallery, price, condition, details, seller card, favourite,
+ * "Contact seller" form and more items from the same seller.
+ */
 @Component({
   selector: 'app-product-detail',
   imports: [RouterLink, DatePipe, ConditionLabel, SellerBadge, StarRating, ProductCard, Icon],
@@ -48,19 +52,24 @@ export class ProductDetail {
   readonly loading = this.listingService.loading;
   readonly conditionInfo = CONDITION_INFO;
 
+  /** The item of the address /product/:id (undefined while loading or if it was deleted). */
   readonly listing = computed(() => this.listingService.byId(this.id()));
   readonly seller = computed(() => {
     const listing = this.listing();
     return listing ? this.users.byId(listing.sellerId) : undefined;
   });
+  /** Seller information for the seller card: mark, number of sales. */
   readonly rating = computed(() => {
     const seller = this.seller();
     return seller ? this.users.rating(seller.id) : { average: 0, count: 0 };
   });
   readonly sales = computed(() => {
     const seller = this.seller();
-    return seller ? this.listingService.bySeller(seller.id).filter((l) => l.status === 'sold').length : 0;
+    return seller
+      ? this.listingService.bySeller(seller.id).filter((l) => l.status === 'sold').length
+      : 0;
   });
+  /** Up to 4 other items for sale by the same seller. */
   readonly moreFromSeller = computed(() => {
     const listing = this.listing();
     if (!listing) return [];
@@ -73,6 +82,7 @@ export class ProductDetail {
     const listing = this.listing();
     return listing ? this.favourites.ids().has(listing.id) : false;
   });
+  /** True when the logged-in member is the seller (the page then shows "This is your listing"). */
   readonly isOwner = computed(() => {
     const user = this.auth.user();
     const listing = this.listing();
@@ -83,20 +93,24 @@ export class ProductDetail {
   readonly showConfirmation = computed(
     () => this.published() === 'new' && this.isOwner() && !this.confirmationClosed(),
   );
+  /** "Posted 3 days ago". */
   readonly posted = computed(() => {
     const listing = this.listing();
     return listing ? timeAgo(listing.createdAt) : '';
   });
 
+  /** Index of the photo shown in large; the thumbnails change it. */
   readonly selectedPhoto = signal(0);
   readonly mainPhoto = computed(() => {
     const listing = this.listing();
     return listing?.photos[this.selectedPhoto()] ?? listing?.photos[0] ?? 'images/placeholder.svg';
   });
+  /** "Contact seller" form open or closed, and the text being typed. */
   readonly contactOpen = signal(false);
   readonly messageText = signal('');
   readonly sending = signal(false);
 
+  /** Last item counted as a view (a view is counted once per item opened). */
   private viewedId: string | null = null;
 
   constructor() {
@@ -113,10 +127,12 @@ export class ProductDetail {
     });
   }
 
+  /** Letters of the seller avatar, e.g. "AM". */
   initials(firstName: string, lastName: string): string {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   }
 
+  /** Heart button: same behaviour as on the product cards. */
   toggleFavourite(): void {
     const listing = this.listing();
     if (!listing) return;
@@ -125,9 +141,12 @@ export class ProductDetail {
       this.goToLogin('Log in to save your favourites.');
       return;
     }
-    this.toast.show(result === 'added' ? 'Added to your favourites' : 'Removed from your favourites');
+    this.toast.show(
+      result === 'added' ? 'Added to your favourites' : 'Removed from your favourites',
+    );
   }
 
+  /** Visitors must log in before writing to a seller. */
   openContact(): void {
     if (!this.auth.isLoggedIn()) {
       this.goToLogin('Log in to contact the seller.');
@@ -140,6 +159,7 @@ export class ProductDetail {
     this.messageText.set((event.target as HTMLTextAreaElement).value);
   }
 
+  /** Sends the message (at least 5 characters) with POST /messages (simulation). */
   sendMessage(): void {
     const listing = this.listing();
     const user = this.auth.user();
@@ -170,6 +190,7 @@ export class ProductDetail {
       });
   }
 
+  /** Toast + Log in page, then back to this product after log-in (returnUrl). */
   private goToLogin(message: string): void {
     this.toast.show(message, 'info');
     this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });

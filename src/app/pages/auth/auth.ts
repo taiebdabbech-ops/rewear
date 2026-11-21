@@ -6,8 +6,13 @@ import { ToastService } from '../../core/toast.service';
 import { CITIES, cleanPhone, passwordsMatch, TN_PHONE } from '../../core/validators';
 import { Icon } from '../../shared/icon/icon';
 
+/** The two tabs of the page. */
 type AuthMode = 'login' | 'signup';
 
+/**
+ * Log in / Sign up page (two tabs). Reactive forms with validation messages under each field;
+ * after success the member goes back to the page he wanted (returnUrl) or to My account.
+ */
 @Component({
   selector: 'app-auth',
   imports: [ReactiveFormsModule, RouterLink, Icon],
@@ -25,14 +30,17 @@ export class Auth {
   private readonly toast = inject(ToastService);
   private readonly router = inject(Router);
 
+  /** Tab clicked by the user; null until he clicks (then ?mode= decides). */
   private readonly chosenMode = signal<AuthMode | null>(null);
   readonly currentMode = computed<AuthMode>(
     () => this.chosenMode() ?? (this.mode() === 'signup' ? 'signup' : 'login'),
   );
 
+  /** True while the API answers: the buttons are disabled to avoid double sending. */
   readonly loading = signal(false);
   readonly loginError = signal<string | null>(null);
   readonly signupError = signal<string | null>(null);
+  /** Error messages appear only after a first try (or once a field was touched). */
   readonly loginSubmitted = signal(false);
   readonly signupSubmitted = signal(false);
 
@@ -41,6 +49,7 @@ export class Auth {
     password: ['', Validators.required],
   });
 
+  /** Sign-up rules: Tunisian phone, password of 6+ characters typed twice, terms accepted. */
   readonly signupForm = this.fb.nonNullable.group(
     {
       firstName: ['', [Validators.required, Validators.maxLength(30)]],
@@ -57,22 +66,26 @@ export class Auth {
 
   readonly cities = CITIES;
 
+  /** Switches tab and clears the old error messages. */
   setMode(mode: AuthMode): void {
     this.chosenMode.set(mode);
     this.loginError.set(null);
     this.signupError.set(null);
   }
 
+  /** Should the error under this log-in field be shown? */
   loginInvalid(name: 'email' | 'password'): boolean {
     const control = this.loginForm.controls[name];
     return control.invalid && (control.touched || this.loginSubmitted());
   }
 
+  /** Should the error under this sign-up field be shown? */
   signupInvalid(name: string): boolean {
     const control = this.signupForm.get(name);
     return !!control && control.invalid && (control.touched || this.signupSubmitted());
   }
 
+  /** Log-in form: checks the fields, asks AuthService, then redirects or shows an error. */
   login(): void {
     this.loginSubmitted.set(true);
     this.loginError.set(null);
@@ -97,6 +110,7 @@ export class Auth {
     });
   }
 
+  /** Sign-up form: checks every field, creates the account, then redirects. */
   signup(): void {
     this.signupSubmitted.set(true);
     this.signupError.set(null);
@@ -133,6 +147,7 @@ export class Auth {
       });
   }
 
+  /** "Fill in" button of the demo box: fills in Sarra's e-mail and password (for the presentation). */
   fillDemo(): void {
     this.loginForm.setValue({ email: 'sarra@rewear.tn', password: 'rewear123' });
   }

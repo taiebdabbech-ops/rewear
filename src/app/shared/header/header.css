@@ -43,11 +43,27 @@
   color: var(--charcoal);
   min-width: 0;
 }
-.search input:focus { outline: none; }
-.search:focus-within { box-shadow: 0 0 0 2px var(--forest); }
-.header-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-.login-link { color: var(--forest); font-weight: 700; text-decoration: none; white-space: nowrap; }
-.login-link:hover { text-decoration: underline; }
+.search input:focus {
+  outline: none;
+}
+.search:focus-within {
+  box-shadow: 0 0 0 2px var(--forest);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.login-link {
+  color: var(--forest);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.login-link:hover {
+  text-decoration: underline;
+}
 .icon-btn {
   display: inline-flex;
   align-items: center;
@@ -60,9 +76,15 @@
   color: var(--forest);
   cursor: pointer;
 }
-.icon-btn:hover { background: var(--linen); }
-.menu-btn { display: none; }
-.account { position: relative; }
+.icon-btn:hover {
+  background: var(--linen);
+}
+.menu-btn {
+  display: none;
+}
+.account {
+  position: relative;
+}
 .avatar-btn {
   display: flex;
   align-items: center;
@@ -116,12 +138,27 @@
   cursor: pointer;
 }
 .dropdown a:hover,
-.dropdown button:hover { background: var(--linen); }
-.dropdown button { border-top: 1px solid var(--line); margin-top: 4px; color: var(--stone); }
-.sell-btn { padding-left: 16px; padding-right: 18px; }
+.dropdown button:hover {
+  background: var(--linen);
+}
+.dropdown button {
+  border-top: 1px solid var(--line);
+  margin-top: 4px;
+  color: var(--stone);
+}
+.sell-btn {
+  padding-left: 16px;
+  padding-right: 18px;
+}
 
-.nav { border-top: 1px solid var(--line); }
-.nav-inner { display: flex; gap: 28px; overflow-x: auto; }
+.nav {
+  border-top: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+}
 .nav a {
   padding: 10px 0;
   color: var(--charcoal);
@@ -129,34 +166,90 @@
   white-space: nowrap;
   border-bottom: 2px solid transparent;
 }
-.nav a:hover { color: var(--forest); }
-.nav a.active { color: var(--forest); font-weight: 700; border-bottom-color: var(--forest); }
-.nav-help { margin-left: auto; }
-.show-sm { display: none; }
+.nav a:hover {
+  color: var(--forest);
+}
+.nav a.active {
+  color: var(--forest);
+  font-weight: 700;
+  border-bottom-color: var(--forest);
+}
+.nav-help {
+  margin-left: auto;
+}
+.show-sm {
+  display: none;
+}
 
 @media (max-width: 860px) {
-  .header-top { flex-wrap: wrap; gap: 8px; }
-  .menu-btn { display: inline-flex; }
-  .search { order: 3; flex-basis: 100%; max-width: none; }
-  .hide-sm { display: none; }
-  .show-sm { display: inline-flex; }
-  .sell-btn span { display: none; }
-  .sell-btn { padding: 0; width: 40px; height: 40px; border-radius: 50%; justify-content: center; }
-  .nav { display: none; }
-  .nav.open { display: block; animation: menu-in 0.2s ease-out; }
-  .nav-inner { flex-direction: column; gap: 0; padding-bottom: 8px; }
-  .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }
-  .nav a.active { border-bottom-color: var(--line); }
-  .nav-help { margin-left: 0; }
+  .header-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .menu-btn {
+    display: inline-flex;
+  }
+  .search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .hide-sm {
+    display: none;
+  }
+  .show-sm {
+    display: inline-flex;
+  }
+  .sell-btn span {
+    display: none;
+  }
+  .sell-btn {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    justify-content: center;
+  }
+  .nav {
+    display: none;
+  }
+  .nav.open {
+    display: block;
+    animation: menu-in 0.2s ease-out;
+  }
+  .nav-inner {
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 8px;
+  }
+  .nav a {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav a.active {
+    border-bottom-color: var(--line);
+  }
+  .nav-help {
+    margin-left: 0;
+  }
 }
 
 /* Menus open with a short fade. */
-@keyframes menu-in { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
 
 /* The header keeps its own view-transition name so it stays still when the page changes. */
-:host { view-transition-name: site-header; }
+:host {
+  view-transition-name: site-header;
+}
 
 /* Phones: Sell and favourites move to the bottom navigation bar. */
 @media (max-width: 600px) {
-  .hide-xs { display: none !important; }
+  .hide-xs {
+    display: none !important;
+  }
 }

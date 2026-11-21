@@ -24,10 +24,16 @@ export class ProductCard {
   private readonly toast = inject(ToastService);
   private readonly router = inject(Router);
 
+  /** Seller of the item (for the badge), read from the users already loaded. */
   readonly seller = computed(() => this.users.byId(this.listing().sellerId));
   readonly isFavourite = computed(() => this.favourites.ids().has(this.listing().id));
+  /** First photo, or a neutral drawing when the item has none. */
   readonly photo = computed(() => this.listing().photos[0] ?? 'images/placeholder.svg');
 
+  /**
+   * Click on the heart. The card is a link, so the click must not open the product page.
+   * Visitors are sent to Log in; members see a toast "Added / Removed".
+   */
   toggleFavourite(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
@@ -37,6 +43,8 @@ export class ProductCard {
       this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
       return;
     }
-    this.toast.show(result === 'added' ? 'Added to your favourites' : 'Removed from your favourites');
+    this.toast.show(
+      result === 'added' ? 'Added to your favourites' : 'Removed from your favourites',
+    );
   }
 }

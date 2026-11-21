@@ -45,7 +45,11 @@ Also included: toast notifications, loading and error states (with a "Try again"
 | Page transitions | Soft fade between pages with the router's View Transitions (`withViewTransitions` in `app.config.ts`); the header and the mobile bar stay still |
 | Micro-animations | Cards and buttons react to hover and press, the favourite heart "pops", menus and FAQ answers open with a short fade, items of a grid appear one after the other |
 | Mobile navigation | Bottom bar on phones (< 600 px) with Home, Shop, Sell, Favourites and Account, as in the Objective 2 mobile prototype |
-| Accessibility | Animations switched off for users who ask for reduced motion (`prefers-reduced-motion`), current page announced to screen readers (`aria-current`), visible focus ring on product cards |
+| Accessibility | Animations switched off for users who ask for reduced motion (`prefers-reduced-motion`), current page announced to screen readers (`aria-current`), visible focus ring on product cards (keyboard only), Escape closes the phone filter panel |
+| Loading states | Grey "skeleton" cards on the home page, the shop and the product page while json-server answers, error message with a "Try again" button when the API is stopped |
+| Code splitting | Every page is lazy-loaded (`loadComponent`); inside pages, `@defer` blocks load the "My messages" and "Profile" tabs and the contact form only when they are needed (separate chunks in the build) |
+| Code quality | ESLint (`angular-eslint`, recommended + accessibility rules for templates): 0 errors. Prettier: all files formatted with the rules of `.prettierrc`. Every service, component and important function has a comment |
+| Performance | Light assets (SVG drawings of a few hundred bytes, inline SVG icons, system fonts, no icon or font download), photos reduced in the browser before saving (`image-utils.ts`), `loading="lazy"` on card images, Lighthouse measured on the production build |
 
 ## 3. Getting started
 
@@ -69,6 +73,27 @@ Keep both terminals open while using the site: if json-server is stopped, the pa
 You can also create a new account from the Sign up tab.
 
 To restore the original demo data, copy `db.seed.json` over `db.json`.
+
+### Check the code quality
+
+```bash
+ng lint                # ESLint: must end with "All files pass linting."
+npm run format:check   # Prettier: must end with "All matched files use Prettier code style!"
+npm run format         # Prettier: formats every file of src/
+```
+
+### Measure the performance (production build)
+
+`ng serve` runs a development build (not minified, with debugging tools), so its Lighthouse
+performance score is not meaningful. To measure the real site:
+
+```bash
+ng build                                   # optimised build in dist/rewear/browser
+npx serve -s dist/rewear/browser -l 4300   # serves it on http://localhost:4300 (-s: every address opens the app)
+```
+
+Keep json-server running, open http://localhost:4300/shop in a private window (no extensions),
+then DevTools › Lighthouse › Mobile › Analyze page load.
 
 ## 4. Project structure
 
@@ -110,8 +135,10 @@ src/
 - **Reactive forms** with built-in validators, a custom group validator (passwords must match) and a pattern for Tunisian phone numbers.
 - **HTTP** through `HttpClient` in services only; pages never call the API directly.
 - **Filtering logic** is a pure function (`listing-filter.ts`) so it is easy to read and to test.
+- **Deferrable views** (`@defer`): code that is not needed for the first screen is downloaded later, e.g. `@defer (on viewport; prefetch on idle)` for the contact form.
+- **Linting and formatting**: `eslint.config.js` (created by `ng add angular-eslint`) and `.prettierrc` (print width 100, single quotes).
 
-**Dependencies:** the Angular packages created by `ng new`, plus `json-server@0.17.4` (development only).
+**Dependencies:** the Angular packages created by `ng new`, plus `json-server@0.17.4`, `angular-eslint`, `eslint`, `typescript-eslint` and `prettier` (development only).
 
 ## 6. How to test the main features
 
@@ -130,6 +157,9 @@ src/
 - Stop json-server: the error message and "Try again" button appear
 - Responsive: 375 px (phone), 768 px (tablet), 1280 px (desktop)
 - Phone (375 px): the bottom bar appears, its current tab is highlighted; filters, toasts and footer stay visible above it
+- Loading states: DevTools › Network › "Slow 4G", reload the shop: grey skeleton cards appear before the items
+- Phone filters: open the filter panel, press Escape or tap the dark background: the panel closes
+- `@defer`: DevTools › Network › JS, open My account › My messages: a new small file is downloaded at that moment
 - Reduced motion (Windows: Settings › Accessibility › Visual effects › Animation effects off): pages change without animation
 - Browsers: Chrome, Firefox, Edge
 

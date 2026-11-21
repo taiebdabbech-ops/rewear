@@ -7,6 +7,10 @@ import { Footer } from './shared/footer/footer';
 import { Header } from './shared/header/header';
 import { ToastContainer } from './shared/toast-container/toast-container';
 
+/**
+ * Root component: the frame of every page (header, page content, footer,
+ * phone bottom bar and notifications). The page itself is shown in <router-outlet>.
+ */
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Header, Footer, BottomNav, ToastContainer],

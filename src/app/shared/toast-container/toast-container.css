@@ -20,12 +20,36 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   animation: slide-in 0.2s ease-out;
 }
-.toast span { flex: 1; }
-.toast-info { background: var(--moss); }
-.toast-error { background: #8a2f2f; }
-.toast button { background: none; border: none; color: inherit; cursor: pointer; padding: 2px; display: flex; }
-@keyframes slide-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.toast span {
+  flex: 1;
+}
+.toast-info {
+  background: var(--moss);
+}
+.toast-error {
+  background: #8a2f2f;
+}
+.toast button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+}
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 /* Phones: stay above the bottom navigation bar. */
 @media (max-width: 600px) {
-  .toasts { bottom: calc(72px + env(safe-area-inset-bottom)); }
+  .toasts {
+    bottom: calc(72px + env(safe-area-inset-bottom));
+  }
 }

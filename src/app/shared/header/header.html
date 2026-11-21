@@ -15,12 +15,25 @@
 
     <form class="search" role="search" (submit)="search($event)">
       <app-icon name="search" [size]="18" />
-      <input type="search" name="q" placeholder="Search for items, brands, sizes…" aria-label="Search" [value]="searchTerm()" (input)="onSearchInput($event)" />
+      <input
+        type="search"
+        name="q"
+        placeholder="Search for items, brands, sizes…"
+        aria-label="Search"
+        [value]="searchTerm()"
+        (input)="onSearchInput($event)"
+      />
     </form>
 
     <div class="header-actions">
       @if (auth.user(); as user) {
-        <a routerLink="/account" [queryParams]="{ tab: 'favourites' }" class="icon-btn hide-xs" aria-label="My favourites" (click)="closeMenus()">
+        <a
+          routerLink="/account"
+          [queryParams]="{ tab: 'favourites' }"
+          class="icon-btn hide-xs"
+          aria-label="My favourites"
+          (click)="closeMenus()"
+        >
           <app-icon name="heart" />
         </a>
         <div class="account">
@@ -38,10 +51,34 @@
           @if (accountOpen()) {
             <div class="dropdown" role="menu">
               <a role="menuitem" routerLink="/account" (click)="closeMenus()">My account</a>
-              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'listings' }" (click)="closeMenus()">My listings</a>
-              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'favourites' }" (click)="closeMenus()">My favourites</a>
-              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'messages' }" (click)="closeMenus()">My messages</a>
-              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'profile' }" (click)="closeMenus()">Profile settings</a>
+              <a
+                role="menuitem"
+                routerLink="/account"
+                [queryParams]="{ tab: 'listings' }"
+                (click)="closeMenus()"
+                >My listings</a
+              >
+              <a
+                role="menuitem"
+                routerLink="/account"
+                [queryParams]="{ tab: 'favourites' }"
+                (click)="closeMenus()"
+                >My favourites</a
+              >
+              <a
+                role="menuitem"
+                routerLink="/account"
+                [queryParams]="{ tab: 'messages' }"
+                (click)="closeMenus()"
+                >My messages</a
+              >
+              <a
+                role="menuitem"
+                routerLink="/account"
+                [queryParams]="{ tab: 'profile' }"
+                (click)="closeMenus()"
+                >Profile settings</a
+              >
               <button role="menuitem" type="button" (click)="logout()">
                 <app-icon name="logout" [size]="16" /> Log out
               </button>
@@ -62,11 +99,31 @@
 
   <nav id="main-nav" class="nav" [class.open]="menuOpen()" aria-label="Main navigation">
     <div class="container nav-inner">
-      <a routerLink="/shop" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenus()">All items</a>
+      <a
+        routerLink="/shop"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenus()"
+        >All items</a
+      >
       @for (category of categories; track category) {
-        <a [routerLink]="['/shop', category.toLowerCase()]" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="closeMenus()">{{ category }}</a>
+        <a
+          [routerLink]="['/shop', category.toLowerCase()]"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          (click)="closeMenus()"
+          >{{ category }}</a
+        >
       }
-      <a routerLink="/how-it-works" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-help" (click)="closeMenus()">How it works</a>
+      <a
+        routerLink="/how-it-works"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        class="nav-help"
+        (click)="closeMenus()"
+        >How it works</a
+      >
     </div>
   </nav>
 </header>

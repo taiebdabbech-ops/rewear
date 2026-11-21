@@ -3,7 +3,10 @@
     <div class="hero-text">
       <p class="eyebrow"><app-icon name="leaf" [size]="16" /> Second-hand fashion in Tunisia</p>
       <h1>Sell what you no longer wear.</h1>
-      <p class="lead">Give your clothes a second life and find quality pieces at fair prices, with no service fee for buyers.</p>
+      <p class="lead">
+        Give your clothes a second life and find quality pieces at fair prices, with no service fee
+        for buyers.
+      </p>
       <div class="hero-actions">
         <a routerLink="/sell" class="btn btn-primary">Start selling</a>
         <a routerLink="/how-it-works" class="btn btn-secondary">How it works</a>
@@ -36,7 +39,9 @@
   @if (error()) {
     <div class="alert" role="alert">
       {{ error() }}
-      <button type="button" class="btn btn-sm btn-secondary retry" (click)="retry()">Try again</button>
+      <button type="button" class="btn btn-sm btn-secondary retry" (click)="retry()">
+        Try again
+      </button>
     </div>
   }
 

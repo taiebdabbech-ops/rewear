@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/auth.service';
 import { ToastService } from '../../../core/toast.service';
 import { CITIES, cleanPhone, passwordsMatch, TN_PHONE } from '../../../core/validators';
 
+/** Names of the fields of each form, so the error helpers only accept real fields. */
 type ProfileField = 'firstName' | 'lastName' | 'phone' | 'city';
 type PasswordField = 'current' | 'password' | 'confirm';
 
@@ -23,10 +24,12 @@ export class ProfileSettings {
   private readonly toast = inject(ToastService);
   readonly auth = inject(AuthService);
 
+  /** True while the API saves: the button shows "Saving…" and is disabled. */
   readonly savingProfile = signal(false);
   readonly savingPassword = signal(false);
   readonly profileSubmitted = signal(false);
   readonly passwordSubmitted = signal(false);
+  /** Error under the password form, e.g. wrong current password. */
   readonly passwordError = signal<string | null>(null);
 
   /** The user's own city stays selectable even if it is not in the standard list. */
@@ -35,6 +38,7 @@ export class ProfileSettings {
     return city && !CITIES.includes(city) ? [city, ...CITIES] : CITIES;
   });
 
+  /** Personal details: same rules as the sign-up form. */
   readonly profileForm = this.fb.nonNullable.group({
     firstName: ['', [Validators.required, Validators.maxLength(30)]],
     lastName: ['', [Validators.required, Validators.maxLength(30)]],
@@ -42,6 +46,7 @@ export class ProfileSettings {
     city: ['', Validators.required],
   });
 
+  /** Password change: current password, then the new one typed twice. */
   readonly passwordForm = this.fb.nonNullable.group(
     {
       current: ['', Validators.required],
@@ -51,6 +56,7 @@ export class ProfileSettings {
     { validators: passwordsMatch },
   );
 
+  // Start with the values of the logged-in member.
   constructor() {
     this.resetProfile();
   }
@@ -68,11 +74,13 @@ export class ProfileSettings {
     this.profileSubmitted.set(false);
   }
 
+  /** Should the error under this profile field be shown? */
   profileInvalid(name: ProfileField): boolean {
     const control = this.profileForm.controls[name];
     return control.invalid && (control.touched || this.profileSubmitted());
   }
 
+  /** Should the error under this password field be shown? */
   passwordInvalid(name: PasswordField): boolean {
     const control = this.passwordForm.controls[name];
     return control.invalid && (control.touched || this.passwordSubmitted());
@@ -84,6 +92,7 @@ export class ProfileSettings {
     return this.passwordForm.hasError('mismatch') && (confirm.touched || this.passwordSubmitted());
   }
 
+  /** "Save changes": checks the form, then PATCH /users/:id through AuthService. */
   saveProfile(): void {
     this.profileSubmitted.set(true);
     if (this.profileForm.invalid) {
@@ -107,11 +116,15 @@ export class ProfileSettings {
         },
         error: () => {
           this.savingProfile.set(false);
-          this.toast.show('The profile could not be saved. Is the API running on port 3000?', 'error');
+          this.toast.show(
+            'The profile could not be saved. Is the API running on port 3000?',
+            'error',
+          );
         },
       });
   }
 
+  /** "Change password": checks the form, then asks AuthService (simulated check). */
   changePassword(): void {
     this.passwordSubmitted.set(true);
     this.passwordError.set(null);

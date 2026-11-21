@@ -5,6 +5,10 @@ import { ConditionLabel } from '../../shared/condition-label/condition-label';
 import { SellerBadge } from '../../shared/seller-badge/seller-badge';
 import { ContactForm } from './contact-form/contact-form';
 
+/**
+ * "How it works" page: guides for buyers and sellers, condition grades, badges, FAQ
+ * and the contact form (loaded with a defer block when it scrolls into view).
+ */
 @Component({
   selector: 'app-how-it-works',
   imports: [RouterLink, ConditionLabel, SellerBadge, ContactForm],
@@ -18,6 +22,7 @@ export class HowItWorks {
   readonly badges = BADGES;
   readonly badgeInfo = BADGE_INFO;
 
+  /** Questions of the FAQ, shown as <details> elements that open on click. */
   readonly faq = [
     {
       q: 'Does REWEAR take a fee from buyers?',

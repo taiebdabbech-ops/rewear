@@ -1,4 +1,16 @@
-.rating { display: inline-flex; align-items: center; gap: 6px; }
-.stars { display: inline-flex; color: #d6d4cc; }
-.stars .on { color: var(--brass); }
-.count { color: var(--stone); font-size: 0.875rem; }
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.stars {
+  display: inline-flex;
+  color: #d6d4cc;
+}
+.stars .on {
+  color: var(--brass);
+}
+.count {
+  color: var(--stone);
+  font-size: 0.875rem;
+}
