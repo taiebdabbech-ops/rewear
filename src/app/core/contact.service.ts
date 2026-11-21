@@ -9,6 +9,7 @@ import { ContactMessage } from './models';
 export class ContactService {
   private readonly http = inject(HttpClient);
 
+  /** POST /contactMessages: saves a message sent from the contact form. */
   send(message: ContactMessage): Observable<ContactMessage> {
     return this.http.post<ContactMessage>(`${API_URL}/contactMessages`, message);
   }

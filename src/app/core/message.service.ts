@@ -18,6 +18,7 @@ export interface Inbox {
 export class MessageService {
   private readonly http = inject(HttpClient);
 
+  /** POST /messages: the "Contact seller" form of a product page. */
   send(message: Message): Observable<Message> {
     return this.http.post<Message>(`${API_URL}/messages`, message);
   }
@@ -26,8 +27,14 @@ export class MessageService {
   inbox(userId: string): Observable<Inbox> {
     const newestFirst = (list: Message[]) => [...list].sort((a, b) => b.date.localeCompare(a.date));
     return forkJoin({
-      received: this.http.get<Message[]>(`${API_URL}/messages`, { params: new HttpParams().set('sellerId', userId) }),
-      sent: this.http.get<Message[]>(`${API_URL}/messages`, { params: new HttpParams().set('fromUserId', userId) }),
-    }).pipe(map(({ received, sent }) => ({ received: newestFirst(received), sent: newestFirst(sent) })));
+      received: this.http.get<Message[]>(`${API_URL}/messages`, {
+        params: new HttpParams().set('sellerId', userId),
+      }),
+      sent: this.http.get<Message[]>(`${API_URL}/messages`, {
+        params: new HttpParams().set('fromUserId', userId),
+      }),
+    }).pipe(
+      map(({ received, sent }) => ({ received: newestFirst(received), sent: newestFirst(sent) })),
+    );
   }
 }

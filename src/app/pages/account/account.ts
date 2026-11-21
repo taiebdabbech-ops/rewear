@@ -14,11 +14,26 @@ import { StarRating } from '../../shared/star-rating/star-rating';
 import { AccountMessages } from './account-messages/account-messages';
 import { ProfileSettings } from './profile-settings/profile-settings';
 
+/** The tabs of the My account page. */
 type AccountTab = 'listings' | 'favourites' | 'messages' | 'reputation' | 'profile';
 
+/**
+ * My account (members only, protected by authGuard): my listings by status, favourites,
+ * messages, reputation and profile. The open tab is kept in the address (?tab=…).
+ * "My messages" and "Profile" are loaded with a defer block (separate code chunks).
+ */
 @Component({
   selector: 'app-account',
-  imports: [RouterLink, ProductCard, ConditionLabel, SellerBadge, StarRating, Icon, AccountMessages, ProfileSettings],
+  imports: [
+    RouterLink,
+    ProductCard,
+    ConditionLabel,
+    SellerBadge,
+    StarRating,
+    Icon,
+    AccountMessages,
+    ProfileSettings,
+  ],
   templateUrl: './account.html',
   styleUrl: './account.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,23 +63,29 @@ export class Account {
   ];
   readonly badgeInfo = BADGE_INFO;
 
+  /** Status chosen in "My listings": Active, Sold or Drafts. */
   readonly status = signal<ListingStatus>('active');
+  /** Id of the listing waiting for the delete confirmation (null = none). */
   readonly pendingDelete = signal<string | null>(null);
 
+  /** Tab to show; an unknown ?tab= value falls back to "My listings". */
   readonly currentTab = computed<AccountTab>(() => {
     const t = this.tab();
     return this.tabs.some((x) => x.id === t) ? (t as AccountTab) : 'listings';
   });
 
+  /** All the listings of the logged-in member. */
   readonly myListings = computed(() => {
     const user = this.auth.user();
     return user ? this.listingService.bySeller(user.id) : [];
   });
+  /** My listings with the chosen status, newest first. */
   readonly filteredListings = computed(() =>
     this.myListings()
       .filter((l) => l.status === this.status())
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
   );
+  /** Listings saved with a heart. */
   readonly favouriteListings = computed(() => {
     const ids = this.favourites.ids();
     return this.listingService.listings().filter((l) => ids.has(l.id));
@@ -77,17 +98,21 @@ export class Account {
     const user = this.auth.user();
     return user ? this.users.reviewsFor(user.id) : [];
   });
+  /** Statistics of the "My reputation" tab. */
   readonly totalViews = computed(() => this.myListings().reduce((sum, l) => sum + l.views, 0));
   readonly soldCount = computed(() => this.myListings().filter((l) => l.status === 'sold').length);
 
+  /** Number shown on each status button, e.g. "Sold (2)". */
   countFor(status: ListingStatus): number {
     return this.myListings().filter((l) => l.status === status).length;
   }
 
+  /** Changes ?tab= in the address, so the tab survives a reload and the back button. */
   selectTab(tab: AccountTab): void {
     this.router.navigate([], { queryParams: { tab }, queryParamsHandling: 'merge' });
   }
 
+  /** Mark as sold, put back online or move to drafts (PATCH /listings/:id). */
   setStatus(listing: Listing, status: ListingStatus): void {
     this.listingService.update(listing.id, { status }).subscribe({
       next: () => {
@@ -102,6 +127,7 @@ export class Account {
     });
   }
 
+  /** Deletes the listing after the user confirmed (DELETE /listings/:id). */
   confirmDelete(listing: Listing): void {
     this.listingService.remove(listing.id).subscribe({
       next: () => {
@@ -112,6 +138,7 @@ export class Account {
     });
   }
 
+  /** "Log out" link of the account page. */
   logout(): void {
     this.auth.logout();
     this.toast.show('You are logged out.', 'info');

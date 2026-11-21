@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/auth.guard';
 
 // Every page is lazy-loaded: its code is downloaded only when the user opens it.
+// canActivate: [authGuard] keeps Sell and My account for logged-in members.
 export const routes: Routes = [
   {
     path: '',
@@ -21,12 +22,14 @@ export const routes: Routes = [
   {
     path: 'product/:id',
     title: 'Product — REWEAR',
-    loadComponent: () => import('./pages/product-detail/product-detail').then((m) => m.ProductDetail),
+    loadComponent: () =>
+      import('./pages/product-detail/product-detail').then((m) => m.ProductDetail),
   },
   {
     path: 'seller/:id',
     title: 'Seller — REWEAR',
-    loadComponent: () => import('./pages/seller-profile/seller-profile').then((m) => m.SellerProfile),
+    loadComponent: () =>
+      import('./pages/seller-profile/seller-profile').then((m) => m.SellerProfile),
   },
   {
     path: 'sell',
@@ -48,7 +51,8 @@ export const routes: Routes = [
   {
     path: 'forgot-password',
     title: 'Forgot password — REWEAR',
-    loadComponent: () => import('./pages/forgot-password/forgot-password').then((m) => m.ForgotPassword),
+    loadComponent: () =>
+      import('./pages/forgot-password/forgot-password').then((m) => m.ForgotPassword),
   },
   {
     path: 'how-it-works',

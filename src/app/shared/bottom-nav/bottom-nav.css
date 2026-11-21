@@ -1,4 +1,6 @@
-:host { display: none; }
+:host {
+  display: none;
+}
 
 @media (max-width: 600px) {
   :host {
@@ -34,9 +36,16 @@
   font-weight: 700;
   transition: color 0.15s ease;
 }
-.bottom-nav a app-icon { display: inline-flex; transition: transform 0.15s ease; }
-.bottom-nav a.active { color: var(--forest); }
-.bottom-nav a.active app-icon { transform: translateY(-2px); }
+.bottom-nav a app-icon {
+  display: inline-flex;
+  transition: transform 0.15s ease;
+}
+.bottom-nav a.active {
+  color: var(--forest);
+}
+.bottom-nav a.active app-icon {
+  transform: translateY(-2px);
+}
 
 .sell-dot {
   width: 40px;
@@ -50,5 +59,9 @@
   box-shadow: 0 4px 12px rgba(38, 58, 48, 0.3);
   transition: transform 0.15s ease;
 }
-.sell:active .sell-dot { transform: scale(0.94); }
-.sell.active .sell-dot { background: var(--moss); }
+.sell:active .sell-dot {
+  transform: scale(0.94);
+}
+.sell.active .sell-dot {
+  background: var(--moss);
+}

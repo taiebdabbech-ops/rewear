@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { timeAgo } from '../../../core/image-utils';
 import { ListingService } from '../../../core/listing.service';
@@ -6,6 +14,7 @@ import { Inbox, MessageService } from '../../../core/message.service';
 import { Message } from '../../../core/models';
 import { UserService } from '../../../core/user.service';
 
+/** The two lists: messages received as a seller, or sent to other sellers. */
 type Box = 'received' | 'sent';
 
 /** What one line of the list needs, prepared once instead of in the template. */
@@ -30,6 +39,7 @@ interface MessageView {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountMessages implements OnInit {
+  /** Id of the logged-in member, given by the Account page. */
   readonly userId = input.required<string>();
 
   private readonly messages = inject(MessageService);
@@ -40,11 +50,14 @@ export class AccountMessages implements OnInit {
     { id: 'received', label: 'Received' },
     { id: 'sent', label: 'Sent' },
   ];
+  /** Tab shown: Received or Sent. */
   readonly box = signal<Box>('received');
+  /** Both lists as received from the API (null before the first answer). */
   readonly inbox = signal<Inbox | null>(null);
   readonly loading = signal(true);
   readonly error = signal(false);
 
+  /** Lines of the open tab, with the listing photo/title and the other person's name. */
   readonly items = computed<MessageView[]>(() => {
     const inbox = this.inbox();
     if (!inbox) return [];
@@ -63,14 +76,17 @@ export class AccountMessages implements OnInit {
     });
   });
 
+  /** The list is loaded when the tab opens (the userId input is ready at this moment). */
   ngOnInit(): void {
     this.load();
   }
 
+  /** Number shown in each tab title, e.g. "Received (2)". */
   count(box: Box): number {
     return this.inbox()?.[box].length ?? 0;
   }
 
+  /** Asks the API for both lists ("Try again" calls it again after an error). */
   load(): void {
     this.loading.set(true);
     this.error.set(false);

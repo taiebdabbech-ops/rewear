@@ -6,7 +6,9 @@ import { Icon, IconName } from '../icon/icon';
 @Component({
   selector: 'app-seller-badge',
   imports: [Icon],
-  template: `<span [class]="classes()" [attr.title]="info()"><app-icon [name]="icon()" [size]="13" />{{ badge() }}</span>`,
+  template: `<span [class]="classes()" [attr.title]="info()"
+    ><app-icon [name]="icon()" [size]="13" />{{ badge() }}</span
+  >`,
   styleUrl: './seller-badge.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -15,6 +17,7 @@ export class SellerBadge {
   readonly large = input(false);
 
   readonly info = computed(() => BADGE_INFO[this.badge()]);
+  /** Icon of each badge: person (Basic), shield (Verified), star (Trusted). */
   readonly icon = computed<IconName>(() => {
     const icons: Record<Badge, IconName> = { Basic: 'user', Verified: 'shield', Trusted: 'star' };
     return icons[this.badge()];

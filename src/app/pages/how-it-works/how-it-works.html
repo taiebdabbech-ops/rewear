@@ -3,7 +3,10 @@
     <a routerLink="/">Home</a> › <strong>How it works</strong>
   </nav>
   <h1>How REWEAR works</h1>
-  <p class="lead">REWEAR connects people who no longer wear their clothes with people looking for quality pieces at fair prices.</p>
+  <p class="lead">
+    REWEAR connects people who no longer wear their clothes with people looking for quality pieces
+    at fair prices.
+  </p>
 
   <div class="guides">
     <section id="buying" class="panel">
@@ -30,7 +33,9 @@
 
   <section id="conditions" class="block">
     <h2>Condition grades</h2>
-    <p class="muted">Every listing uses one of these four grades, so all items are described the same way.</p>
+    <p class="muted">
+      Every listing uses one of these four grades, so all items are described the same way.
+    </p>
     <div class="cards">
       @for (c of conditions; track c) {
         <div class="panel">
@@ -67,20 +72,35 @@
   <div class="info-grid">
     <section id="about" class="panel">
       <h2>About</h2>
-      <p>REWEAR is a student web project from SUP'COM. Its goal is to cut clothing costs, give clothes a second life and help people earn money from what they no longer wear.</p>
+      <p>
+        REWEAR is a student web project from SUP'COM. Its goal is to cut clothing costs, give
+        clothes a second life and help people earn money from what they no longer wear.
+      </p>
     </section>
     <section id="terms" class="panel">
       <h2>Terms and privacy</h2>
-      <p>Demonstration project: data is stored locally by json-server and is not shared. Do not use real passwords.</p>
+      <p>
+        Demonstration project: data is stored locally by json-server and is not shared. Do not use
+        real passwords.
+      </p>
     </section>
   </div>
 
   <section id="contact" class="panel contact" aria-labelledby="contact-title">
     <div class="contact-intro">
       <h2 id="contact-title">Contact us</h2>
-      <p>A question about an item, your account or a problem on the site? Write to the REWEAR team.</p>
-      <p class="muted">You can also e-mail us at <a href="mailto:contact&#64;rewear.tn">contact&#64;rewear.tn</a>.</p>
+      <p>
+        A question about an item, your account or a problem on the site? Write to the REWEAR team.
+      </p>
+      <p class="muted">
+        You can also e-mail us at <a href="mailto:contact&#64;rewear.tn">contact&#64;rewear.tn</a>.
+      </p>
     </div>
-    <app-contact-form />
+    <!-- Deferred block: the form code is fetched when the browser is idle and shown when it scrolls into view. -->
+    @defer (on viewport; prefetch on idle) {
+      <app-contact-form />
+    } @placeholder {
+      <div class="form-placeholder" aria-hidden="true"></div>
+    }
   </section>
 </div>

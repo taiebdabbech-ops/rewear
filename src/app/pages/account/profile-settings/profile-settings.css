@@ -1,6 +1,26 @@
-.settings { margin-bottom: 18px; }
-.settings h3 { font-size: 1.15rem; margin: 0 0 14px; color: var(--forest); }
-.city { max-width: 320px; }
-.actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.since { margin-left: auto; font-size: 0.9rem; }
-.input:disabled { background: var(--linen); color: var(--stone); cursor: not-allowed; }
+.settings {
+  margin-bottom: 18px;
+}
+.settings h3 {
+  font-size: 1.15rem;
+  margin: 0 0 14px;
+  color: var(--forest);
+}
+.city {
+  max-width: 320px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.since {
+  margin-left: auto;
+  font-size: 0.9rem;
+}
+.input:disabled {
+  background: var(--linen);
+  color: var(--stone);
+  cursor: not-allowed;
+}

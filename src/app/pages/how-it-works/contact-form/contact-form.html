@@ -3,8 +3,12 @@
     <span class="icon-circle"><app-icon name="check" [size]="24" /></span>
     <div>
       <h3>Thank you, your message is sent.</h3>
-      <p class="muted">We usually answer within 48 hours. (Simulation: the message is stored by json-server only.)</p>
-      <button type="button" class="btn btn-sm btn-secondary" (click)="another()">Write another message</button>
+      <p class="muted">
+        We usually answer within 48 hours. (Simulation: the message is stored by json-server only.)
+      </p>
+      <button type="button" class="btn btn-sm btn-secondary" (click)="another()">
+        Write another message
+      </button>
     </div>
   </div>
 } @else {
@@ -12,14 +16,27 @@
     <div class="form-row">
       <div class="field">
         <label for="contact-name">Name</label>
-        <input id="contact-name" class="input" autocomplete="name" formControlName="name" [class.invalid]="invalid('name')" />
+        <input
+          id="contact-name"
+          class="input"
+          autocomplete="name"
+          formControlName="name"
+          [class.invalid]="invalid('name')"
+        />
         @if (invalid('name')) {
           <span class="error">Enter your name.</span>
         }
       </div>
       <div class="field">
         <label for="contact-email">Email</label>
-        <input id="contact-email" class="input" type="email" autocomplete="email" formControlName="email" [class.invalid]="invalid('email')" />
+        <input
+          id="contact-email"
+          class="input"
+          type="email"
+          autocomplete="email"
+          formControlName="email"
+          [class.invalid]="invalid('email')"
+        />
         @if (invalid('email')) {
           <span class="error">Enter a valid email address.</span>
         }
@@ -27,7 +44,12 @@
     </div>
     <div class="field">
       <label for="contact-subject">Subject</label>
-      <select id="contact-subject" class="input" formControlName="subject" [class.invalid]="invalid('subject')">
+      <select
+        id="contact-subject"
+        class="input"
+        formControlName="subject"
+        [class.invalid]="invalid('subject')"
+      >
         <option value="" disabled>Choose a subject</option>
         @for (s of subjects; track s) {
           <option [value]="s">{{ s }}</option>
@@ -39,8 +61,18 @@
     </div>
     <div class="field">
       <label for="contact-text">Message</label>
-      <textarea id="contact-text" class="input" rows="5" formControlName="text" [attr.maxlength]="maxLength" aria-describedby="contact-count" [class.invalid]="invalid('text')"></textarea>
-      <span id="contact-count" class="hint">{{ form.controls.text.value.length }}/{{ maxLength }}</span>
+      <textarea
+        id="contact-text"
+        class="input"
+        rows="5"
+        formControlName="text"
+        [attr.maxlength]="maxLength"
+        aria-describedby="contact-count"
+        [class.invalid]="invalid('text')"
+      ></textarea>
+      <span id="contact-count" class="hint"
+        >{{ form.controls.text.value.length }}/{{ maxLength }}</span
+      >
       @if (invalid('text')) {
         <span class="error">Write at least 10 characters.</span>
       }

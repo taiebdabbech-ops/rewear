@@ -5,6 +5,10 @@ import { CATEGORIES } from '../../core/models';
 import { ToastService } from '../../core/toast.service';
 import { Icon } from '../icon/icon';
 
+/**
+ * Site header: logo, search bar, favourites, account menu and "Sell" button,
+ * plus the category bar. On phones the categories open from the menu button.
+ */
 @Component({
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive, Icon],
@@ -18,11 +22,14 @@ export class Header {
   private readonly toast = inject(ToastService);
 
   readonly categories = CATEGORIES;
+  /** Phone menu (categories) open or closed. */
   readonly menuOpen = signal(false);
+  /** Account drop-down menu (My listings, My messages, Log out…) open or closed. */
   readonly accountOpen = signal(false);
   /** Text shown in the search bar: it follows the ?q= of the current page. */
   readonly searchTerm = signal('');
 
+  // Keep the search bar in step with the address: /shop?q=jeans shows "jeans".
   constructor() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -32,6 +39,7 @@ export class Header {
     });
   }
 
+  /** Letters shown in the round avatar, e.g. "SB" for Sarra Ben Ali. */
   readonly initials = computed(() => {
     const user = this.auth.user();
     return user ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase() : '';
@@ -41,6 +49,7 @@ export class Header {
     this.searchTerm.set((event.target as HTMLInputElement).value);
   }
 
+  /** Search form: opens the shop with ?q=… (or the whole shop if the text is empty). */
   search(event: Event): void {
     event.preventDefault();
     const q = this.searchTerm().trim();
@@ -57,11 +66,13 @@ export class Header {
     this.accountOpen.update((open) => !open);
   }
 
+  /** Closes both menus (after a click on a link or a search). */
   closeMenus(): void {
     this.menuOpen.set(false);
     this.accountOpen.set(false);
   }
 
+  /** Logs out, then goes back to the home page with a toast. */
   logout(): void {
     this.auth.logout();
     this.closeMenus();

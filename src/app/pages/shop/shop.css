@@ -1,43 +1,189 @@
-.shop-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
-.shop-head h1 { margin-bottom: 0; }
-.search-info { margin: 0; }
-.cat-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
-.cat-tabs a { padding: 6px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); color: var(--charcoal); text-decoration: none; }
-.cat-tabs a.active { background: var(--forest); color: #fff; border-color: var(--forest); }
+.shop-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.shop-head h1 {
+  margin-bottom: 0;
+}
+.search-info {
+  margin: 0;
+}
+.cat-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0 24px;
+}
+.cat-tabs a {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--charcoal);
+  text-decoration: none;
+}
+.cat-tabs a.active {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
+}
 
-.layout { display: grid; grid-template-columns: 240px 1fr; gap: 24px; align-items: start; }
-.filters { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; position: sticky; top: 130px; }
-.filters-head { display: flex; justify-content: space-between; align-items: center; }
-.filters-head h2 { font-size: 1.2rem; margin: 0; }
-.icon-close { display: none; background: none; border: none; cursor: pointer; color: var(--forest); }
-fieldset { border: none; padding: 0; margin: 18px 0 0; }
-legend { font-weight: 700; margin-bottom: 8px; padding: 0; }
-.size-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.size { min-width: 40px; padding: 5px 8px; border: 1px solid var(--sage); background: #fff; border-radius: 6px; cursor: pointer; font: inherit; font-size: 0.875rem; }
-.size.on { background: var(--forest); color: #fff; border-color: var(--forest); }
-.price-row { display: flex; align-items: center; gap: 6px; }
-.price-row .input { padding: 8px; }
-.check { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
-.check input { width: 18px; height: 18px; accent-color: var(--forest); }
-.filters .btn { margin-top: 18px; }
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.filters {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  position: sticky;
+  top: 130px;
+}
+.filters-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filters-head h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.icon-close {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--forest);
+}
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 18px 0 0;
+}
+legend {
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding: 0;
+}
+.size-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.size {
+  min-width: 40px;
+  padding: 5px 8px;
+  border: 1px solid var(--sage);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.875rem;
+}
+.size.on {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
+}
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.price-row .input {
+  padding: 8px;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  cursor: pointer;
+}
+.check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--forest);
+}
+.filters .btn {
+  margin-top: 18px;
+}
 
-.toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-.active-chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; align-items: center; }
-.removable { border: 1px solid var(--sage); cursor: pointer; font: inherit; font-size: 0.875rem; }
-.removable:hover { background: var(--mist); }
-.sort select { min-width: 190px; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.active-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  align-items: center;
+}
+.removable {
+  border: 1px solid var(--sage);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.875rem;
+}
+.removable:hover {
+  background: var(--mist);
+}
+.sort select {
+  min-width: 190px;
+}
 
-.pagination { display: flex; justify-content: center; gap: 6px; margin-top: 28px; }
-.pagination button { min-width: 38px; height: 38px; border: 1px solid var(--line); background: #fff; border-radius: 6px; cursor: pointer; font: inherit; }
-.pagination button.on { background: var(--forest); color: #fff; border-color: var(--forest); }
-.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 28px;
+}
+.pagination button {
+  min-width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+.pagination button.on {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
+}
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
-.show-mobile { display: none; }
-.backdrop { display: none; }
+.show-mobile {
+  display: none;
+}
+.backdrop {
+  display: none;
+  border: none;
+  padding: 0;
+  cursor: default;
+}
 
 @media (max-width: 860px) {
-  .layout { grid-template-columns: 1fr; }
-  .show-mobile { display: inline-flex; }
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .show-mobile {
+    display: inline-flex;
+  }
   .filters {
     position: fixed;
     left: 0;
@@ -51,9 +197,23 @@ legend { font-weight: 700; margin-bottom: 8px; padding: 0; }
     transform: translateY(105%);
     transition: transform 0.25s ease;
   }
-  .filters.open { transform: none; }
-  .icon-close { display: inline-flex; }
-  .backdrop { display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.35); z-index: 70; }
-  .sort { margin-left: auto; }
-  .sort select { min-width: 0; }
+  .filters.open {
+    transform: none;
+  }
+  .icon-close {
+    display: inline-flex;
+  }
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 70;
+  }
+  .sort {
+    margin-left: auto;
+  }
+  .sort select {
+    min-width: 0;
+  }
 }

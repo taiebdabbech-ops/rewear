@@ -13,14 +13,19 @@
     </div>
     @if (q()) {
       <p class="search-info">
-        Results for “<strong>{{ q() }}</strong>”
-        <button type="button" class="btn btn-ghost btn-sm" (click)="clearSearch()">Clear search</button>
+        Results for “<strong>{{ q() }}</strong
+        >”
+        <button type="button" class="btn btn-ghost btn-sm" (click)="clearSearch()">
+          Clear search
+        </button>
       </p>
     }
   </div>
 
   <nav class="cat-tabs" aria-label="Categories">
-    <a routerLink="/shop" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All</a>
+    <a routerLink="/shop" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      >All</a
+    >
     @for (c of categories; track c) {
       <a [routerLink]="['/shop', c.toLowerCase()]" routerLinkActive="active">{{ c }}</a>
     }
@@ -30,7 +35,12 @@
     <aside class="filters" [class.open]="filtersOpen()" aria-label="Filters">
       <div class="filters-head">
         <h2>Filters</h2>
-        <button type="button" class="icon-close" aria-label="Close filters" (click)="filtersOpen.set(false)">
+        <button
+          type="button"
+          class="icon-close"
+          aria-label="Close filters"
+          (click)="filtersOpen.set(false)"
+        >
           <app-icon name="close" />
         </button>
       </div>
@@ -45,7 +55,9 @@
               [class.on]="selectedSizes().includes(size)"
               [attr.aria-pressed]="selectedSizes().includes(size)"
               (click)="toggleSize(size)"
-            >{{ size }}</button>
+            >
+              {{ size }}
+            </button>
           } @empty {
             <span class="muted">No sizes</span>
           }
@@ -55,22 +67,49 @@
       <fieldset>
         <legend>Price (TND)</legend>
         <div class="price-row">
-          <input class="input" type="number" min="0" placeholder="Min" aria-label="Minimum price" [value]="minPrice() ?? ''" (input)="onMinPrice($event)" />
+          <input
+            class="input"
+            type="number"
+            min="0"
+            placeholder="Min"
+            aria-label="Minimum price"
+            [value]="minPrice() ?? ''"
+            (input)="onMinPrice($event)"
+          />
           <span>–</span>
-          <input class="input" type="number" min="0" placeholder="Max" aria-label="Maximum price" [value]="maxPrice() ?? ''" (input)="onMaxPrice($event)" />
+          <input
+            class="input"
+            type="number"
+            min="0"
+            placeholder="Max"
+            aria-label="Maximum price"
+            [value]="maxPrice() ?? ''"
+            (input)="onMaxPrice($event)"
+          />
         </div>
       </fieldset>
 
       <fieldset>
         <legend>Brand</legend>
-        <input class="input" type="text" placeholder="e.g. Zara, Levi's" aria-label="Brand" [value]="brand()" (input)="onBrand($event)" />
+        <input
+          class="input"
+          type="text"
+          placeholder="e.g. Zara, Levi's"
+          aria-label="Brand"
+          [value]="brand()"
+          (input)="onBrand($event)"
+        />
       </fieldset>
 
       <fieldset>
         <legend>Condition</legend>
         @for (c of conditions; track c) {
           <label class="check">
-            <input type="checkbox" [checked]="selectedConditions().includes(c)" (change)="toggleCondition(c)" />
+            <input
+              type="checkbox"
+              [checked]="selectedConditions().includes(c)"
+              (change)="toggleCondition(c)"
+            />
             {{ c }}
           </label>
         }
@@ -80,31 +119,55 @@
         <legend>Seller badge</legend>
         @for (b of badgeOptions; track b) {
           <label class="check">
-            <input type="checkbox" [checked]="selectedBadges().includes(b)" (change)="toggleBadge(b)" />
+            <input
+              type="checkbox"
+              [checked]="selectedBadges().includes(b)"
+              (change)="toggleBadge(b)"
+            />
             {{ b }}
           </label>
         }
       </fieldset>
 
-      <button type="button" class="btn btn-secondary btn-block" (click)="clearFilters()">Reset filters</button>
-      <button type="button" class="btn btn-primary btn-block show-mobile" (click)="filtersOpen.set(false)">
+      <button type="button" class="btn btn-secondary btn-block" (click)="clearFilters()">
+        Reset filters
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-block show-mobile"
+        (click)="filtersOpen.set(false)"
+      >
         Show {{ results().length }} items
       </button>
     </aside>
 
     <section class="results" aria-label="Results">
       <div class="toolbar">
-        <button type="button" class="btn btn-secondary btn-sm show-mobile" (click)="filtersOpen.set(true)">
-          <app-icon name="filter" [size]="16" /> Filters @if (chips().length) { ({{ chips().length }}) }
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm show-mobile"
+          (click)="filtersOpen.set(true)"
+        >
+          <app-icon name="filter" [size]="16" /> Filters
+          @if (chips().length) {
+            ({{ chips().length }})
+          }
         </button>
         <div class="active-chips">
           @for (chip of chips(); track chip.key) {
-            <button type="button" class="chip removable" (click)="chip.remove()" [attr.aria-label]="'Remove filter ' + chip.label">
+            <button
+              type="button"
+              class="chip removable"
+              (click)="chip.remove()"
+              [attr.aria-label]="'Remove filter ' + chip.label"
+            >
               {{ chip.label }} <app-icon name="close" [size]="14" />
             </button>
           }
           @if (chips().length > 0) {
-            <button type="button" class="btn btn-ghost btn-sm" (click)="clearFilters()">Clear all</button>
+            <button type="button" class="btn btn-ghost btn-sm" (click)="clearFilters()">
+              Clear all
+            </button>
           }
         </div>
         <label class="sort">
@@ -122,7 +185,12 @@
       }
 
       @if (loading()) {
-        <p class="state">Loading items…</p>
+        <p class="sr-only" role="status">Loading items…</p>
+        <div class="grid" aria-hidden="true">
+          @for (p of placeholders; track p) {
+            <div class="skeleton card-skeleton"></div>
+          }
+        </div>
       } @else {
         <div class="grid">
           @for (listing of pageItems(); track listing.id) {
@@ -133,16 +201,39 @@
           <div class="state">
             <h2>No items match your filters</h2>
             <p>Try removing a filter or searching for another brand.</p>
-            <button type="button" class="btn btn-secondary" (click)="clearFilters()">Reset filters</button>
+            <button type="button" class="btn btn-secondary" (click)="clearFilters()">
+              Reset filters
+            </button>
           </div>
         }
         @if (totalPages() > 1) {
           <nav class="pagination" aria-label="Pages">
-            <button type="button" [disabled]="page() === 1" (click)="goToPage(page() - 1)" aria-label="Previous page">‹</button>
+            <button
+              type="button"
+              [disabled]="page() === 1"
+              (click)="goToPage(page() - 1)"
+              aria-label="Previous page"
+            >
+              ‹
+            </button>
             @for (p of pages(); track p) {
-              <button type="button" [class.on]="p === page()" [attr.aria-current]="p === page() ? 'page' : null" (click)="goToPage(p)">{{ p }}</button>
+              <button
+                type="button"
+                [class.on]="p === page()"
+                [attr.aria-current]="p === page() ? 'page' : null"
+                (click)="goToPage(p)"
+              >
+                {{ p }}
+              </button>
             }
-            <button type="button" [disabled]="page() === totalPages()" (click)="goToPage(page() + 1)" aria-label="Next page">›</button>
+            <button
+              type="button"
+              [disabled]="page() === totalPages()"
+              (click)="goToPage(page() + 1)"
+              aria-label="Next page"
+            >
+              ›
+            </button>
           </nav>
         }
       }
@@ -150,5 +241,11 @@
   </div>
 </div>
 @if (filtersOpen()) {
-  <div class="backdrop" (click)="filtersOpen.set(false)"></div>
+  <button
+    type="button"
+    class="backdrop"
+    tabindex="-1"
+    aria-label="Close the filters"
+    (click)="filtersOpen.set(false)"
+  ></button>
 }

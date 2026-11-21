@@ -1,7 +1,8 @@
 <div class="container page">
   @if (seller(); as s) {
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a routerLink="/">Home</a> › <a routerLink="/shop">Shop</a> › <strong>{{ s.firstName }} {{ s.lastName.charAt(0) }}.</strong>
+      <a routerLink="/">Home</a> › <a routerLink="/shop">Shop</a> ›
+      <strong>{{ s.firstName }} {{ s.lastName.charAt(0) }}.</strong>
     </nav>
 
     <section class="profile-head">
@@ -9,21 +10,48 @@
       <div class="identity">
         <h1>{{ s.firstName }} {{ s.lastName.charAt(0) }}.</h1>
         <app-seller-badge [badge]="s.badge" [large]="true" />
-        <p class="muted"><app-icon name="pin" [size]="15" /> {{ s.city }} · Member since {{ s.memberSince + '-01' | date: 'MMMM y' }}</p>
+        <p class="muted">
+          <app-icon name="pin" [size]="15" /> {{ s.city }} · Member since
+          {{ s.memberSince + '-01' | date: 'MMMM y' }}
+        </p>
       </div>
       <dl class="stats">
-        <div><dt>Rating</dt><dd>{{ rating().count ? rating().average : '—' }}</dd></div>
-        <div><dt>Reviews</dt><dd>{{ rating().count }}</dd></div>
-        <div><dt>Sales</dt><dd>{{ sales() }}</dd></div>
-        <div><dt>For sale</dt><dd>{{ listings().length }}</dd></div>
+        <div>
+          <dt>Rating</dt>
+          <dd>{{ rating().count ? rating().average : '—' }}</dd>
+        </div>
+        <div>
+          <dt>Reviews</dt>
+          <dd>{{ rating().count }}</dd>
+        </div>
+        <div>
+          <dt>Sales</dt>
+          <dd>{{ sales() }}</dd>
+        </div>
+        <div>
+          <dt>For sale</dt>
+          <dd>{{ listings().length }}</dd>
+        </div>
       </dl>
     </section>
 
     <div class="tabs" role="tablist">
-      <button type="button" role="tab" [class.active]="tab() === 'listings'" [attr.aria-selected]="tab() === 'listings'" (click)="tab.set('listings')">
+      <button
+        type="button"
+        role="tab"
+        [class.active]="tab() === 'listings'"
+        [attr.aria-selected]="tab() === 'listings'"
+        (click)="tab.set('listings')"
+      >
         Listings ({{ listings().length }})
       </button>
-      <button type="button" role="tab" [class.active]="tab() === 'reviews'" [attr.aria-selected]="tab() === 'reviews'" (click)="tab.set('reviews')">
+      <button
+        type="button"
+        role="tab"
+        [class.active]="tab() === 'reviews'"
+        [attr.aria-selected]="tab() === 'reviews'"
+        (click)="tab.set('reviews')"
+      >
         Reviews ({{ rating().count }})
       </button>
     </div>
@@ -65,12 +93,20 @@
               </div>
               <div class="field">
                 <label for="comment">Comment</label>
-                <textarea id="comment" class="input" rows="3" formControlName="comment" placeholder="How was your experience with this seller?"></textarea>
+                <textarea
+                  id="comment"
+                  class="input"
+                  rows="3"
+                  formControlName="comment"
+                  placeholder="How was your experience with this seller?"
+                ></textarea>
                 @if (reviewForm.controls.comment.touched && reviewForm.controls.comment.invalid) {
                   <span class="error">Write at least 10 characters.</span>
                 }
               </div>
-              <button type="submit" class="btn btn-primary" [disabled]="submitting()">Publish review</button>
+              <button type="submit" class="btn btn-primary" [disabled]="submitting()">
+                Publish review
+              </button>
             </form>
           }
 

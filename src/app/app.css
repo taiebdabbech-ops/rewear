@@ -6,4 +6,7 @@
 
 .app-main {
   flex: 1;
+  /* While the code of a page is downloading, <main> is empty: without this height the footer
+     would appear at the top of the screen, then jump down (a layout shift, CLS in Lighthouse). */
+  min-height: 100vh;
 }

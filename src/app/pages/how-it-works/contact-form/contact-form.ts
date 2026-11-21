@@ -6,6 +6,7 @@ import { CONTACT_SUBJECTS, ContactSubject, newId } from '../../../core/models';
 import { ToastService } from '../../../core/toast.service';
 import { Icon } from '../../../shared/icon/icon';
 
+/** Names of the form fields (used by invalid()). */
 type ContactField = 'name' | 'email' | 'subject' | 'text';
 
 /** Contact form (sitemap: Support › Contact). Name and e-mail are pre-filled for members. */
@@ -23,28 +24,36 @@ export class ContactForm {
   private readonly toast = inject(ToastService);
 
   readonly subjects = CONTACT_SUBJECTS;
+  /** Longest message allowed; the template shows a counter "120/1000". */
   readonly maxLength = 1000;
   readonly sending = signal(false);
   readonly submitted = signal(false);
+  /** True after a successful send: the form is replaced by a thank-you message. */
   readonly sent = signal(false);
   readonly error = signal<string | null>(null);
 
+  /** Name, e-mail, subject (list) and a message of 10 to 1000 characters. */
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(60)]],
     email: ['', [Validators.required, Validators.email]],
     subject: ['' as ContactSubject | '', Validators.required],
-    text: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(this.maxLength)]],
+    text: [
+      '',
+      [Validators.required, Validators.minLength(10), Validators.maxLength(this.maxLength)],
+    ],
   });
 
   constructor() {
     this.prefill();
   }
 
+  /** Should the error under this field be shown? */
   invalid(name: ContactField): boolean {
     const control = this.form.controls[name];
     return control.invalid && (control.touched || this.submitted());
   }
 
+  /** Checks the form, then POST /contactMessages through ContactService. */
   send(): void {
     this.submitted.set(true);
     this.error.set(null);
@@ -84,6 +93,7 @@ export class ContactForm {
     this.prefill();
   }
 
+  /** Empty form; members get their name and e-mail already filled in. */
   private prefill(): void {
     const user = this.auth.user();
     this.form.reset({

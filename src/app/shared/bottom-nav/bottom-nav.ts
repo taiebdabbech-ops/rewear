@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { Icon } from '../icon/icon';
 
+/** The five tabs of the phone bar. */
 type NavItem = 'home' | 'shop' | 'sell' | 'favourites' | 'account';
 
 /**
@@ -20,6 +21,7 @@ export class BottomNav {
   private readonly router = inject(Router);
   readonly auth = inject(AuthService);
 
+  /** Current address, updated after each navigation. */
   private readonly url = signal('/');
 
   /** Which tab is highlighted, worked out from the current address. */
@@ -27,9 +29,11 @@ export class BottomNav {
     const tree = this.router.parseUrl(this.url());
     const path = this.url().split(/[?#]/)[0];
     if (path === '/' || path === '') return 'home';
-    if (path.startsWith('/shop') || path.startsWith('/product') || path.startsWith('/seller')) return 'shop';
+    if (path.startsWith('/shop') || path.startsWith('/product') || path.startsWith('/seller'))
+      return 'shop';
     if (path.startsWith('/sell')) return 'sell';
-    if (path.startsWith('/account')) return tree.queryParams['tab'] === 'favourites' ? 'favourites' : 'account';
+    if (path.startsWith('/account'))
+      return tree.queryParams['tab'] === 'favourites' ? 'favourites' : 'account';
     if (path.startsWith('/login') || path.startsWith('/forgot-password')) return 'account';
     return null;
   });

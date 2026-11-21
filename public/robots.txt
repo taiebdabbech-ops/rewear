@@ -1,0 +1,3 @@
+# Search engines may visit every page of REWEAR.
+User-agent: *
+Allow: /

@@ -9,7 +9,20 @@
   white-space: nowrap;
   line-height: 1.5;
 }
-.badge-lg { font-size: 0.875rem; padding: 3px 12px; }
-.badge-basic { border: 1px solid var(--grey); color: var(--stone); background: #fff; }
-.badge-verified { background: var(--mist); color: var(--forest); }
-.badge-trusted { background: var(--brass); color: var(--forest); }
+.badge-lg {
+  font-size: 0.875rem;
+  padding: 3px 12px;
+}
+.badge-basic {
+  border: 1px solid var(--grey);
+  color: var(--stone);
+  background: #fff;
+}
+.badge-verified {
+  background: var(--mist);
+  color: var(--forest);
+}
+.badge-trusted {
+  background: var(--brass);
+  color: var(--forest);
+}

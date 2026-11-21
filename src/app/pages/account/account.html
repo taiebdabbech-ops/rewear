@@ -5,32 +5,54 @@
         <h1>Hello, {{ user.firstName }}</h1>
         <p class="muted">Manage your listings, favourites, messages and profile.</p>
       </div>
-      <a routerLink="/sell" class="btn btn-primary"><app-icon name="plus" [size]="18" /> New listing</a>
+      <a routerLink="/sell" class="btn btn-primary"
+        ><app-icon name="plus" [size]="18" /> New listing</a
+      >
     </div>
 
     <div class="account-layout">
       <nav class="side" aria-label="Account sections">
         @for (t of tabs; track t.id) {
-          <button type="button" [class.active]="currentTab() === t.id" [attr.aria-current]="currentTab() === t.id ? 'page' : null" (click)="selectTab(t.id)">
+          <button
+            type="button"
+            [class.active]="currentTab() === t.id"
+            [attr.aria-current]="currentTab() === t.id ? 'page' : null"
+            (click)="selectTab(t.id)"
+          >
             {{ t.label }}
           </button>
         }
-        <button type="button" class="logout" (click)="logout()"><app-icon name="logout" [size]="16" /> Log out</button>
+        <button type="button" class="logout" (click)="logout()">
+          <app-icon name="logout" [size]="16" /> Log out
+        </button>
       </nav>
 
       <section class="content">
         <div class="summary">
           <div><span class="muted">Badge</span><app-seller-badge [badge]="user.badge" /></div>
-          <div><span class="muted">Rating</span><strong>{{ rating().count ? rating().average + ' ★' : '—' }}</strong></div>
-          <div><span class="muted">Sales</span><strong>{{ soldCount() }}</strong></div>
-          <div><span class="muted">Total views</span><strong>{{ totalViews() }}</strong></div>
+          <div>
+            <span class="muted">Rating</span
+            ><strong>{{ rating().count ? rating().average + ' ★' : '—' }}</strong>
+          </div>
+          <div>
+            <span class="muted">Sales</span><strong>{{ soldCount() }}</strong>
+          </div>
+          <div>
+            <span class="muted">Total views</span><strong>{{ totalViews() }}</strong>
+          </div>
         </div>
 
         @switch (currentTab()) {
           @case ('listings') {
             <div class="tabs" role="tablist">
               @for (s of statuses; track s.id) {
-                <button type="button" role="tab" [class.active]="status() === s.id" [attr.aria-selected]="status() === s.id" (click)="status.set(s.id)">
+                <button
+                  type="button"
+                  role="tab"
+                  [class.active]="status() === s.id"
+                  [attr.aria-selected]="status() === s.id"
+                  (click)="status.set(s.id)"
+                >
                   {{ s.label }} ({{ countFor(s.id) }})
                 </button>
               }
@@ -40,26 +62,66 @@
                 <li class="row">
                   <img [src]="listing.photos[0] || 'images/placeholder.svg'" alt="" />
                   <div class="row-main">
-                    <a [routerLink]="['/product', listing.id]" class="row-title">{{ listing.title || 'Untitled draft' }}</a>
+                    <a [routerLink]="['/product', listing.id]" class="row-title">{{
+                      listing.title || 'Untitled draft'
+                    }}</a>
                     <div class="row-meta">
                       <strong>{{ listing.price }} TND</strong>
                       <app-condition-label [condition]="listing.condition" />
-                      <span class="muted"><app-icon name="eye" [size]="15" /> {{ listing.views }}</span>
+                      <span class="muted"
+                        ><app-icon name="eye" [size]="15" /> {{ listing.views }}</span
+                      >
                     </div>
                   </div>
                   <div class="row-actions">
                     @if (pendingDelete() === listing.id) {
                       <span class="confirm">Delete for good?</span>
-                      <button type="button" class="btn btn-sm btn-danger" (click)="confirmDelete(listing)">Delete</button>
-                      <button type="button" class="btn btn-sm btn-ghost" (click)="pendingDelete.set(null)">Cancel</button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-danger"
+                        (click)="confirmDelete(listing)"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-ghost"
+                        (click)="pendingDelete.set(null)"
+                      >
+                        Cancel
+                      </button>
                     } @else {
-                      <a class="btn btn-sm btn-secondary" routerLink="/sell" [queryParams]="{ edit: listing.id }"><app-icon name="edit" [size]="15" /> Edit</a>
+                      <a
+                        class="btn btn-sm btn-secondary"
+                        routerLink="/sell"
+                        [queryParams]="{ edit: listing.id }"
+                        ><app-icon name="edit" [size]="15" /> Edit</a
+                      >
                       @if (listing.status === 'active') {
-                        <button type="button" class="btn btn-sm btn-secondary" (click)="setStatus(listing, 'sold')"><app-icon name="check" [size]="15" /> Mark as sold</button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          (click)="setStatus(listing, 'sold')"
+                        >
+                          <app-icon name="check" [size]="15" /> Mark as sold
+                        </button>
                       } @else {
-                        <button type="button" class="btn btn-sm btn-secondary" (click)="setStatus(listing, 'active')">Publish</button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          (click)="setStatus(listing, 'active')"
+                        >
+                          Publish
+                        </button>
                       }
-                      <button type="button" class="btn btn-sm btn-ghost" [attr.aria-label]="'Delete ' + listing.title" (click)="pendingDelete.set(listing.id)"><app-icon name="trash" [size]="16" /></button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-ghost"
+                        [attr.aria-label]="'Delete ' + listing.title"
+                        (click)="pendingDelete.set(listing.id)"
+                      >
+                        <app-icon name="trash" [size]="16" />
+                      </button>
                     }
                   </div>
                 </li>
@@ -102,11 +164,20 @@
           }
           @case ('messages') {
             <h2>My messages</h2>
-            <app-account-messages [userId]="user.id" />
+            <!-- Deferred block: the code of this tab is downloaded only when the tab is opened. -->
+            @defer {
+              <app-account-messages [userId]="user.id" />
+            } @placeholder {
+              <p class="muted">Loading your messages…</p>
+            }
           }
           @case ('profile') {
             <h2>Profile</h2>
-            <app-profile-settings />
+            @defer {
+              <app-profile-settings />
+            } @placeholder {
+              <p class="muted">Loading your profile…</p>
+            }
             <a [routerLink]="['/seller', user.id]">See my public profile</a>
           }
         }
