@@ -41,5 +41,16 @@
   justify-content: center;
   cursor: pointer;
 }
-.fav:hover { background: #fff; }
+.fav:hover { background: #fff; transform: scale(1.08); }
 .fav.on { color: #a33b3b; }
+.fav { transition: transform 0.15s ease, background 0.15s ease; }
+.fav app-icon { display: inline-flex; }
+/* The heart "pops" when the item is added to the favourites. */
+.fav.on app-icon { animation: heart-pop 0.4s ease-out; }
+@keyframes heart-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+/* Keyboard users see which card they are on. */
+.card:has(:focus-visible) { box-shadow: 0 0 0 2px var(--forest); }

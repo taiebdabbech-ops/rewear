@@ -1,0 +1,54 @@
+:host { display: none; }
+
+@media (max-width: 600px) {
+  :host {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60; /* under the shop filter sheet (70-80) and the toasts (100) */
+    view-transition-name: bottom-nav; /* stays still when the page changes */
+  }
+}
+
+.bottom-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: #fff;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 60px;
+  color: var(--stone);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: color 0.15s ease;
+}
+.bottom-nav a app-icon { display: inline-flex; transition: transform 0.15s ease; }
+.bottom-nav a.active { color: var(--forest); }
+.bottom-nav a.active app-icon { transform: translateY(-2px); }
+
+.sell-dot {
+  width: 40px;
+  height: 40px;
+  margin-top: -16px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(38, 58, 48, 0.3);
+  transition: transform 0.15s ease;
+}
+.sell:active .sell-dot { transform: scale(0.94); }
+.sell.active .sell-dot { background: var(--moss); }

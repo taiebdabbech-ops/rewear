@@ -20,7 +20,7 @@
 
     <div class="header-actions">
       @if (auth.user(); as user) {
-        <a routerLink="/account" [queryParams]="{ tab: 'favourites' }" class="icon-btn" aria-label="My favourites" (click)="closeMenus()">
+        <a routerLink="/account" [queryParams]="{ tab: 'favourites' }" class="icon-btn hide-xs" aria-label="My favourites" (click)="closeMenus()">
           <app-icon name="heart" />
         </a>
         <div class="account">
@@ -50,11 +50,11 @@
         </div>
       } @else {
         <a routerLink="/login" class="login-link hide-sm">Log in | Sign up</a>
-        <a routerLink="/login" class="icon-btn show-sm" aria-label="Log in">
+        <a routerLink="/login" class="icon-btn show-sm hide-xs" aria-label="Log in">
           <app-icon name="user" />
         </a>
       }
-      <a routerLink="/sell" class="btn btn-primary sell-btn" (click)="closeMenus()">
+      <a routerLink="/sell" class="btn btn-primary sell-btn hide-xs" (click)="closeMenus()">
         <app-icon name="plus" [size]="18" /> <span>Sell</span>
       </a>
     </div>
@@ -62,11 +62,11 @@
 
   <nav id="main-nav" class="nav" [class.open]="menuOpen()" aria-label="Main navigation">
     <div class="container nav-inner">
-      <a routerLink="/shop" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenus()">All items</a>
+      <a routerLink="/shop" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenus()">All items</a>
       @for (category of categories; track category) {
-        <a [routerLink]="['/shop', category.toLowerCase()]" routerLinkActive="active" (click)="closeMenus()">{{ category }}</a>
+        <a [routerLink]="['/shop', category.toLowerCase()]" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="closeMenus()">{{ category }}</a>
       }
-      <a routerLink="/how-it-works" routerLinkActive="active" class="nav-help" (click)="closeMenus()">How it works</a>
+      <a routerLink="/how-it-works" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-help" (click)="closeMenus()">How it works</a>
     </div>
   </nav>
 </header>
