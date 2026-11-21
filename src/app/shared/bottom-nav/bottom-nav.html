@@ -1,0 +1,29 @@
+<nav class="bottom-nav" aria-label="Quick navigation">
+  <a routerLink="/" [class.active]="active() === 'home'" [attr.aria-current]="active() === 'home' ? 'page' : null">
+    <app-icon name="home" [size]="22" />
+    <span>Home</span>
+  </a>
+  <a routerLink="/shop" [class.active]="active() === 'shop'" [attr.aria-current]="active() === 'shop' ? 'page' : null">
+    <app-icon name="search" [size]="22" />
+    <span>Shop</span>
+  </a>
+  <a routerLink="/sell" class="sell" [class.active]="active() === 'sell'" [attr.aria-current]="active() === 'sell' ? 'page' : null">
+    <span class="sell-dot"><app-icon name="plus" [size]="22" /></span>
+    <span>Sell</span>
+  </a>
+  <a routerLink="/account" [queryParams]="{ tab: 'favourites' }" [class.active]="active() === 'favourites'" [attr.aria-current]="active() === 'favourites' ? 'page' : null">
+    <app-icon name="heart" [size]="22" />
+    <span>Favourites</span>
+  </a>
+  @if (auth.isLoggedIn()) {
+    <a routerLink="/account" [class.active]="active() === 'account'" [attr.aria-current]="active() === 'account' ? 'page' : null">
+      <app-icon name="user" [size]="22" />
+      <span>Account</span>
+    </a>
+  } @else {
+    <a routerLink="/login" [class.active]="active() === 'account'" [attr.aria-current]="active() === 'account' ? 'page' : null">
+      <app-icon name="user" [size]="22" />
+      <span>Log in</span>
+    </a>
+  }
+</nav>

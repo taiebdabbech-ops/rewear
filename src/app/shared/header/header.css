@@ -86,6 +86,8 @@
   font-size: 0.8rem;
 }
 .dropdown {
+  animation: menu-in 0.15s ease-out;
+  transform-origin: top right;
   position: absolute;
   right: 0;
   top: calc(100% + 8px);
@@ -141,9 +143,20 @@
   .sell-btn span { display: none; }
   .sell-btn { padding: 0; width: 40px; height: 40px; border-radius: 50%; justify-content: center; }
   .nav { display: none; }
-  .nav.open { display: block; }
+  .nav.open { display: block; animation: menu-in 0.2s ease-out; }
   .nav-inner { flex-direction: column; gap: 0; padding-bottom: 8px; }
   .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }
   .nav a.active { border-bottom-color: var(--line); }
   .nav-help { margin-left: 0; }
+}
+
+/* Menus open with a short fade. */
+@keyframes menu-in { from { opacity: 0; transform: translateY(-4px); } }
+
+/* The header keeps its own view-transition name so it stays still when the page changes. */
+:host { view-transition-name: site-header; }
+
+/* Phones: Sell and favourites move to the bottom navigation bar. */
+@media (max-width: 600px) {
+  .hide-xs { display: none !important; }
 }

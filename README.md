@@ -37,6 +37,16 @@ Web Project — **Objective 3: development and integration of the main features*
 
 Also included: toast notifications, loading and error states (with a "Try again" button when the API is off), optimistic favourites, lazy-loaded pages, responsive layout (phone, tablet, desktop), keyboard focus styles, alternative texts and ARIA labels.
 
+### Improvements of Objective 4
+
+| Area | Improvement |
+|---|---|
+| Pages of the sitemap | Profile settings (edit details, change password), My messages, Forgot password, Contact form, publish confirmation |
+| Page transitions | Soft fade between pages with the router's View Transitions (`withViewTransitions` in `app.config.ts`); the header and the mobile bar stay still |
+| Micro-animations | Cards and buttons react to hover and press, the favourite heart "pops", menus and FAQ answers open with a short fade, items of a grid appear one after the other |
+| Mobile navigation | Bottom bar on phones (< 600 px) with Home, Shop, Sell, Favourites and Account, as in the Objective 2 mobile prototype |
+| Accessibility | Animations switched off for users who ask for reduced motion (`prefers-reduced-motion`), current page announced to screen readers (`aria-current`), visible focus ring on product cards |
+
 ## 3. Getting started
 
 **Requirements:** Node.js LTS (tested setup: Node 24, npm 11, Angular CLI 22).
@@ -85,8 +95,8 @@ src/
       listing-filter.ts    Pure filtering and sorting functions
       image-utils.ts       Photo resizing, "x days ago"
     shared/                Reusable components
-      header, footer, product-card, condition-label, seller-badge,
-      star-rating, icon, toast-container
+      header, footer, bottom-nav, product-card, condition-label,
+      seller-badge, star-rating, icon, toast-container
     pages/                 One folder per page
       home, shop, product-detail, seller-profile, sell, account
       (+ profile-settings, account-messages), auth, forgot-password,
@@ -119,6 +129,8 @@ src/
 - Visit `/sell` while logged out: redirect to Log in, then back to Sell
 - Stop json-server: the error message and "Try again" button appear
 - Responsive: 375 px (phone), 768 px (tablet), 1280 px (desktop)
+- Phone (375 px): the bottom bar appears, its current tab is highlighted; filters, toasts and footer stay visible above it
+- Reduced motion (Windows: Settings › Accessibility › Visual effects › Animation effects off): pages change without animation
 - Browsers: Chrome, Firefox, Edge
 
 ## 7. Limits of this version
