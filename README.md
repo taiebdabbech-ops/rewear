@@ -1,7 +1,8 @@
 # REWEAR — Buy better. Wear better.
 
 Second-hand clothing marketplace for Tunisia, built with **Angular**.
-Web Project — **Objective 3: development and integration of the main features** (SUP'COM, 2026/2027).
+Web Project — **Objective 4: finalisation and optimisation of the site** (SUP'COM, 2026/2027).
+It builds on Objective 3 (development and integration of the main features).
 
 - **Team:** Borhen Eddine Labidi, Taieb Dabbech
 - **Supervisor:** Dr. Maroua Nouioua
@@ -49,7 +50,19 @@ Also included: toast notifications, loading and error states (with a "Try again"
 | Loading states | Grey "skeleton" cards on the home page, the shop and the product page while json-server answers, error message with a "Try again" button when the API is stopped |
 | Code splitting | Every page is lazy-loaded (`loadComponent`); inside pages, `@defer` blocks load the "My messages" and "Profile" tabs and the contact form only when they are needed (separate chunks in the build) |
 | Code quality | ESLint (`angular-eslint`, recommended + accessibility rules for templates): 0 errors. Prettier: all files formatted with the rules of `.prettierrc`. Every service, component and important function has a comment |
-| Performance | Light assets (SVG drawings of a few hundred bytes, inline SVG icons, system fonts, no icon or font download), photos reduced in the browser before saving (`image-utils.ts`), `loading="lazy"` on card images, Lighthouse measured on the production build |
+| Performance | Light assets (SVG drawings of a few hundred bytes, inline SVG icons, system fonts, no icon or font download), photos reduced in the browser before saving (`image-utils.ts`), `loading="lazy"` on card images, no layout shift while a page loads (CLS), `robots.txt` for search engines, Lighthouse measured on the production build |
+
+#### Results (Lighthouse on `/shop`, mobile)
+
+| Check | Before | After |
+|---|---|---|
+| Performance | 52 (development server) · 70 (production build, before the layout-shift fix) | **93** (production build) |
+| Accessibility | 96 | **100** |
+| Best Practices | 100 | **100** |
+| SEO | 100 (development server) · 92 (production build, no `robots.txt`) | **100** |
+| ESLint | not configured · 2 errors at the first run | **0 errors** |
+| Prettier | 63 files not formatted | **all files formatted** |
+| Production bundle | — | initial 331 kB (≈ 92 kB transferred); one lazy chunk per page, plus separate chunks for the `@defer` blocks (profile settings, messages, contact form) |
 
 ## 3. Getting started
 
@@ -174,6 +187,10 @@ src/
 
 Code hosted on GitHub: https://github.com/taiebdabbech-ops/rewear
 
-Conventions for the next objectives:
+Objective 4 was developed in three branches, each merged through a pull request:
+#1 `feature/lot1-pages-sitemap` (missing pages), #2 `feature/lot2-ux-ui` (UX/UI and accessibility),
+#3 `feature/lot3-qualite` (code quality and performance).
+
+Conventions:
 - `main` always runs; one branch per feature (`feature/shop-filters`, `feature/sell-form`…), merged through pull requests.
 - Clear commit messages: `feat: add size filter`, `fix: price filter with empty value`, `style: product card spacing`.
