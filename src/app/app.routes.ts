@@ -46,6 +46,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/auth/auth').then((m) => m.Auth),
   },
   {
+    path: 'forgot-password',
+    title: 'Forgot password — REWEAR',
+    loadComponent: () => import('./pages/forgot-password/forgot-password').then((m) => m.ForgotPassword),
+  },
+  {
     path: 'how-it-works',
     title: 'How it works — REWEAR',
     loadComponent: () => import('./pages/how-it-works/how-it-works').then((m) => m.HowItWorks),

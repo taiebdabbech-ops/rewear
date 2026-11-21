@@ -1,28 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { ToastService } from '../../core/toast.service';
+import { CITIES, cleanPhone, passwordsMatch, TN_PHONE } from '../../core/validators';
 import { Icon } from '../../shared/icon/icon';
 
 type AuthMode = 'login' | 'signup';
-
-/** Group validator: the two passwords must be identical. */
-const passwordsMatch: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-  const password = group.get('password')?.value;
-  const confirm = group.get('confirm')?.value;
-  return password && confirm && password !== confirm ? { mismatch: true } : null;
-};
-
-/** Tunisian mobile number: 8 digits, optionally preceded by +216. */
-const TN_PHONE = /^(\+216\s?)?[2-9]\d{1}\s?\d{3}\s?\d{3}$/;
 
 @Component({
   selector: 'app-auth',
@@ -71,7 +55,7 @@ export class Auth {
     { validators: passwordsMatch },
   );
 
-  readonly cities = ['Tunis', 'Ariana', 'Ben Arous', 'Sfax', 'Sousse', 'Monastir', 'Nabeul', 'Bizerte', 'Gabès', 'Kairouan'];
+  readonly cities = CITIES;
 
   setMode(mode: AuthMode): void {
     this.chosenMode.set(mode);
@@ -128,7 +112,7 @@ export class Auth {
         firstName: value.firstName.trim(),
         lastName: value.lastName.trim(),
         email: value.email,
-        phone: value.phone.replace(/\s/g, ''),
+        phone: cleanPhone(value.phone),
         city: value.city,
         password: value.password,
       })

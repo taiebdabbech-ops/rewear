@@ -40,6 +40,8 @@
               <a role="menuitem" routerLink="/account" (click)="closeMenus()">My account</a>
               <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'listings' }" (click)="closeMenus()">My listings</a>
               <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'favourites' }" (click)="closeMenus()">My favourites</a>
+              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'messages' }" (click)="closeMenus()">My messages</a>
+              <a role="menuitem" routerLink="/account" [queryParams]="{ tab: 'profile' }" (click)="closeMenus()">Profile settings</a>
               <button role="menuitem" type="button" (click)="logout()">
                 <app-icon name="logout" [size]="16" /> Log out
               </button>

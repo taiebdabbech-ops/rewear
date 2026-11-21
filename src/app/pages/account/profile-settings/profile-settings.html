@@ -1,0 +1,90 @@
+@if (auth.user(); as user) {
+  <section class="panel settings" aria-labelledby="details-title">
+    <h3 id="details-title">Personal details</h3>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" novalidate>
+      <div class="form-row">
+        <div class="field">
+          <label for="profile-first-name">First name</label>
+          <input id="profile-first-name" class="input" autocomplete="given-name" formControlName="firstName" [class.invalid]="profileInvalid('firstName')" />
+          @if (profileInvalid('firstName')) {
+            <span class="error">Required (30 characters max).</span>
+          }
+        </div>
+        <div class="field">
+          <label for="profile-last-name">Last name</label>
+          <input id="profile-last-name" class="input" autocomplete="family-name" formControlName="lastName" [class.invalid]="profileInvalid('lastName')" />
+          @if (profileInvalid('lastName')) {
+            <span class="error">Required (30 characters max).</span>
+          }
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="profile-email">Email</label>
+          <input id="profile-email" class="input" type="email" [value]="user.email" disabled aria-describedby="profile-email-hint" />
+          <span id="profile-email-hint" class="hint">Your e-mail is your login: it cannot be changed.</span>
+        </div>
+        <div class="field">
+          <label for="profile-phone">Phone number</label>
+          <input id="profile-phone" class="input" type="tel" autocomplete="tel" formControlName="phone" placeholder="+216 22 123 456" [class.invalid]="profileInvalid('phone')" />
+          @if (profileInvalid('phone')) {
+            <span class="error">8-digit Tunisian number.</span>
+          }
+        </div>
+      </div>
+      <div class="field city">
+        <label for="profile-city">City</label>
+        <select id="profile-city" class="input" formControlName="city" [class.invalid]="profileInvalid('city')">
+          @for (c of cities(); track c) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+        @if (profileInvalid('city')) {
+          <span class="error">Choose your city.</span>
+        }
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" [disabled]="savingProfile()">{{ savingProfile() ? 'Saving…' : 'Save changes' }}</button>
+        <button type="button" class="btn btn-ghost" [disabled]="savingProfile()" (click)="resetProfile()">Cancel</button>
+        <span class="muted since">Member since {{ user.memberSince }}</span>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel settings" aria-labelledby="password-title">
+    <h3 id="password-title">Change password</h3>
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" novalidate>
+      <div class="field">
+        <label for="current-password">Current password</label>
+        <input id="current-password" class="input" type="password" autocomplete="current-password" formControlName="current" [class.invalid]="passwordInvalid('current')" />
+        @if (passwordInvalid('current')) {
+          <span class="error">Enter your current password.</span>
+        }
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="new-password">New password</label>
+          <input id="new-password" class="input" type="password" autocomplete="new-password" formControlName="password" [class.invalid]="passwordInvalid('password')" />
+          @if (passwordInvalid('password')) {
+            <span class="error">6 characters minimum.</span>
+          }
+        </div>
+        <div class="field">
+          <label for="confirm-password">Confirm the new password</label>
+          <input id="confirm-password" class="input" type="password" autocomplete="new-password" formControlName="confirm" [class.invalid]="passwordInvalid('confirm') || mismatch()" />
+          @if (passwordInvalid('confirm')) {
+            <span class="error">Confirm the new password.</span>
+          } @else if (mismatch()) {
+            <span class="error">The two passwords are different.</span>
+          }
+        </div>
+      </div>
+      @if (passwordError()) {
+        <div class="alert" role="alert">{{ passwordError() }}</div>
+      }
+      <div class="actions">
+        <button type="submit" class="btn btn-secondary" [disabled]="savingPassword()">{{ savingPassword() ? 'Saving…' : 'Change password' }}</button>
+      </div>
+    </form>
+  </section>
+}

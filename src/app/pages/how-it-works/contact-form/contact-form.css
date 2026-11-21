@@ -1,0 +1,6 @@
+:host { display: block; }
+textarea.input { resize: vertical; min-height: 120px; }
+.done { display: flex; gap: 14px; align-items: flex-start; }
+.done h3 { margin: 4px 0 4px; color: var(--forest); font-size: 1.1rem; }
+.done p { margin: 0 0 12px; }
+.icon-circle { width: 48px; height: 48px; flex: none; border-radius: 50%; background: var(--mist); color: var(--forest); display: grid; place-items: center; }

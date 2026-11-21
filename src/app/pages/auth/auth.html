@@ -21,6 +21,7 @@
           @if (loginInvalid('password')) {
             <span class="error">Enter your password.</span>
           }
+          <a routerLink="/forgot-password" class="forgot">Forgot password?</a>
         </div>
         @if (loginError()) {
           <div class="alert" role="alert">{{ loginError() }}</div>

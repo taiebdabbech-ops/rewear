@@ -34,6 +34,8 @@ import { StarRating } from '../../shared/star-rating/star-rating';
 export class ProductDetail {
   /** Route parameter /product/:id. */
   readonly id = input.required<string>();
+  /** Query parameter ?published=new, added by the Sell page right after a publication. */
+  readonly published = input<string>();
 
   private readonly listingService = inject(ListingService);
   private readonly users = inject(UserService);
@@ -76,6 +78,11 @@ export class ProductDetail {
     const listing = this.listing();
     return !!user && !!listing && user.id === listing.sellerId;
   });
+  /** Publish confirmation (sitemap: Sell › Publish confirmation), shown to the seller only. */
+  readonly confirmationClosed = signal(false);
+  readonly showConfirmation = computed(
+    () => this.published() === 'new' && this.isOwner() && !this.confirmationClosed(),
+  );
   readonly posted = computed(() => {
     const listing = this.listing();
     return listing ? timeAgo(listing.createdAt) : '';

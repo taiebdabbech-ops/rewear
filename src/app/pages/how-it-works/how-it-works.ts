@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { BADGE_INFO, BADGES, CONDITION_INFO, CONDITIONS } from '../../core/models';
 import { ConditionLabel } from '../../shared/condition-label/condition-label';
 import { SellerBadge } from '../../shared/seller-badge/seller-badge';
+import { ContactForm } from './contact-form/contact-form';
 
 @Component({
   selector: 'app-how-it-works',
-  imports: [RouterLink, ConditionLabel, SellerBadge],
+  imports: [RouterLink, ConditionLabel, SellerBadge, ContactForm],
   templateUrl: './how-it-works.html',
   styleUrl: './how-it-works.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

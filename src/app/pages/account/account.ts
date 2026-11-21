@@ -11,12 +11,14 @@ import { Icon } from '../../shared/icon/icon';
 import { ProductCard } from '../../shared/product-card/product-card';
 import { SellerBadge } from '../../shared/seller-badge/seller-badge';
 import { StarRating } from '../../shared/star-rating/star-rating';
+import { AccountMessages } from './account-messages/account-messages';
+import { ProfileSettings } from './profile-settings/profile-settings';
 
-type AccountTab = 'listings' | 'favourites' | 'reputation' | 'profile';
+type AccountTab = 'listings' | 'favourites' | 'messages' | 'reputation' | 'profile';
 
 @Component({
   selector: 'app-account',
-  imports: [RouterLink, ProductCard, ConditionLabel, SellerBadge, StarRating, Icon],
+  imports: [RouterLink, ProductCard, ConditionLabel, SellerBadge, StarRating, Icon, AccountMessages, ProfileSettings],
   templateUrl: './account.html',
   styleUrl: './account.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +37,7 @@ export class Account {
   readonly tabs: { id: AccountTab; label: string }[] = [
     { id: 'listings', label: 'My listings' },
     { id: 'favourites', label: 'My favourites' },
+    { id: 'messages', label: 'My messages' },
     { id: 'reputation', label: 'My reputation' },
     { id: 'profile', label: 'Profile' },
   ];

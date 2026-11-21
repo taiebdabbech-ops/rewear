@@ -70,6 +70,28 @@ export interface Message {
   date: string;
 }
 
+export type ContactSubject = 'Question about an item' | 'My account' | 'Report a problem' | 'Partnership' | 'Other';
+
+/** Message sent to the REWEAR team from the Contact form (stored in db.json › contactMessages). */
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject: ContactSubject;
+  text: string;
+  /** Id of the logged-in member, or null for a visitor. */
+  userId: string | null;
+  date: string;
+}
+
+export const CONTACT_SUBJECTS: ContactSubject[] = [
+  'Question about an item',
+  'My account',
+  'Report a problem',
+  'Partnership',
+  'Other',
+];
+
 export const CATEGORIES: Category[] = ['Women', 'Men', 'Kids', 'Vintage', 'Streetwear'];
 export const CONDITIONS: Condition[] = ['Like New', 'Excellent', 'Good', 'Fair'];
 export const BADGES: Badge[] = ['Basic', 'Verified', 'Trusted'];
